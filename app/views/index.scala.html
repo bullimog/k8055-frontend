@@ -1,7 +1,59 @@
-@(message: String)
 
-@main("Welcome to Play") {
+@import model.Device._
+@(deviceCollection: model.DeviceCollection)
 
-    @play20.welcome(message)
+@main("K8055 Title") {
+<div style="width:400px;" xmlns="http://www.w3.org/1999/html">
+    <fieldset>
+        <legend>Monitors</legend>
+        @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
+        <fieldset>
+            <legend>@monitor.description</legend>
+        <p> <label>Enabled:</label>
+            @Html("<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-true"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">On "+
+                  "<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-false"+monitor.id + "\" value=\"false\" onclick=\"makeCall('"+monitor.id+"', 'false')\" checked>Off ")
+        </p>
+        <p><label>Target:</label>
+            @Html("<button id=\"device-down\"+monitor.id class=\"button\" onclick=\"makeCall('"+monitor.id+"', 'ddown')\"><<</button>" +
+            "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'down')\"><</button> " +
+            "<span id=\"monitor-temperature" + monitor.id + "\"> 0 &deg;c </span>" +
+            " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'up')\">></button>" +
+            "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'dup')\">>></button>")
+        </p>
+        <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
+            @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
+        </p>
+        <p><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
+            @Html("<span id=\"monitor-increaser" + monitor.id + "\"> 0 </span>")
+        </p>
+        </fieldset>
+        }
+    </fieldset>
 
+    <fieldset>
+        <legend>Devices</legend>
+    @deviceCollection.devices.filter(d=>d.deviceType != model.Device.MONITOR).map {device =>
+        <p id="device@device.id">
+            <label id="deviceDesc@device.id">@device.id: @device.description:&nbsp;</label>
+            @{device.deviceType match {
+                case TIMER => Html("<span id=\"device-val"+device.id + "\"> 0 seconds </span>")
+                case ANALOGUE_IN => Html("<span id=\"device-val"+device.id + "\"> 0 "+ device.units.getOrElse("")+ "</span>")
+                case ANALOGUE_OUT => {
+                    Html("<button id=\"device-down\"+device.id class=\"button\" onclick=\"makeCall('"+device.id+"', 'ddown')\"><<</button>" +
+                    "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'down')\"><</button> " +
+                    "<span id=\"device-val" + device.id + "\"> 0 "+ device.units.getOrElse("")+ "</span>" +
+                    " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'up')\">></button>" +
+                    "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'dup')\">>></button>")
+                }
+                case DIGITAL_IN => Html("<span>A button :)</span>")
+                case DIGITAL_OUT => Html("<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">On "+
+                           "<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-false"+device.id + "\" value=\"false\" onclick=\"makeCall('"+device.id+"', 'false')\" checked>Off ")
+                case _ => Html("<b>Bad Device</b>")
+            }}
+        </p>
+        }
+
+    </fieldset>
+
+</div>
 }
