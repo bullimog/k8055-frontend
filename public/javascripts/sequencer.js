@@ -96,7 +96,7 @@
 
 $(function() {
     console.debug("Initialising...")
-    sequencerStatusCall();
+    // sequencerStatusCall();  Mute this out for now.
 });
 
 function initEvents(){
@@ -104,8 +104,8 @@ function initEvents(){
 }
 
 function makeCall(componentId, state){
-    //console.debug("componentId="+componentId+ "   state="+state)
-    jsRoutes.controllers.StatusController.setComponentState(componentId, state).ajax();
+    console.debug("componentId="+componentId+ "   state="+state)
+    jsRoutes.controllers.StatusController.setDeviceState(componentId, state).ajax();
 }
 
 

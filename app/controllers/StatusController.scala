@@ -1,7 +1,11 @@
 package controllers
 
+
 import model.Device._
-import model.{RawDeviceCollection, RawDevice, Device, DeviceCollection}
+import model._
+import play.api.Routes
+import play.api.libs.json.Json
+import play.api.routing.{JavaScriptReverseRouter, JavaScriptReverseRoute}
 import play.api.mvc._
 
 import scala.concurrent.Future
@@ -23,5 +27,24 @@ class StatusController extends Controller {
       Future.successful(Ok(views.html.index(dc)))
     }
   }
+
+
+  def sequencerStatus() = Action { implicit request =>
+    val ss = ""
+    Ok(Json.toJson(ss).toString())
+  }
+
+  def setDeviceState(deviceId: String, state:String) = Action { implicit request =>
+    println("########## setDeviceState: " + state)
+    Ok("Ok")
+  }
+
+  def javascriptReverseRoutes = Action { implicit request =>
+    Ok(JavaScriptReverseRouter("jsRoutes")(
+      controllers.routes.javascript.StatusController.setDeviceState,
+      controllers.routes.javascript.StatusController.sequencerStatus
+    )).as("text/javascript")
+  }
+
 
 }
