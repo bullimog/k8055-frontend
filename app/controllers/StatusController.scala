@@ -18,15 +18,8 @@ class StatusController extends Controller {
       val rawDevices: List[RawDevice] = List(rPump, rHeater, rSwitch, rThermometer, rThermostat)
       val rdc:RawDeviceCollection = RawDeviceCollection("My Device Collection", "For Brewing", rawDevices)
 
-      val pump = Device.convert(rPump, rdc)
-      val heater = Device.convert(rHeater, rdc)
-      val switch = Device.convert(rSwitch, rdc)
-      val thermometer = Device.convert(rThermometer, rdc)
-      val thermostat = Device.convert(rThermostat, rdc)
 
-      val devices: List[Device] = List(pump, heater, switch, thermometer, thermostat)
-
-      val dc:DeviceCollection = DeviceCollection("My Device Collection", "For Brewing", devices)
+      val dc = DeviceCollection.rawToDeviceCollection(rdc)
       Future.successful(Ok(views.html.index(dc)))
     }
   }

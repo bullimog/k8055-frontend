@@ -14,4 +14,9 @@ object DeviceCollection{
     )(DeviceCollection.apply _)
 
   implicit val deviceCollectionWrites = Json.writes[DeviceCollection]
+
+  def rawToDeviceCollection(rawDeviceCollection: RawDeviceCollection):DeviceCollection = {
+    val devices = rawDeviceCollection.devices.map(rawDevice => Device.rawToDevice(rawDevice, rawDeviceCollection))
+    DeviceCollection(rawDeviceCollection.name,rawDeviceCollection.description, devices)
+  }
 }
