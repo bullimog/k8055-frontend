@@ -3,6 +3,8 @@ package model
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{JsPath, Json, Reads}
 
+import scala.annotation.tailrec
+
 
 case class Device(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
                   conversionFactor:Option[Double] = None, conversionOffset:Option[Double] = None,
@@ -35,4 +37,24 @@ object Device {
   )(Device.apply _)
 
   implicit val deviceWrites = Json.writes[Device]
+
+
+  def convert(rawDevice:RawDevice, rawDeviceCollection:RawDeviceCollection):Device = {
+
+    def innerConvert(ord: Option[String]):Option[Device] ={
+      ord.flatMap( rawDeviceIdString =>
+        rawDeviceCollection.devices.find(d => d.id == rawDeviceIdString).map( rmd =>
+          convert(rmd, rawDeviceCollection)
+        )
+      )
+    }
+
+    val monitorSensor = innerConvert(rawDevice.monitorSensor)
+    val monitorIncreaser = innerConvert(rawDevice.monitorIncreaser)
+    val monitorDecreaser = innerConvert(rawDevice.monitorDecreaser)
+
+    Device(rawDevice.description, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units, rawDevice.conversionFactor,
+      rawDevice.conversionOffset, rawDevice.decimalPlaces, monitorSensor, monitorIncreaser, monitorDecreaser,
+      rawDevice.digitalState, rawDevice.analogueState)
+  }
 }
