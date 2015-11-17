@@ -58,3 +58,9 @@ object Device {
       rawDevice.digitalState, rawDevice.analogueState)
   }
 }
+
+/* case classes for ajax data */
+case class DeviceStatus(deviceId:Int, deviceType:Int, deviceValue:String, deviceUnit:Option[String])
+object  ComponentStatus {
+  implicit val formats=Json.writes[DeviceStatus]
+}

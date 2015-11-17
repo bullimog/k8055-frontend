@@ -39,19 +39,20 @@
   }
 
   function updateDevices(ss){
-     for(i=0; i<ss.componentStatuses.length; i++){
-        var compId = ss.componentStatuses[i].componentId
-        var compType = ss.componentStatuses[i].componentType
-        var compValue = ss.componentStatuses[i].componentValue
-        var compUnit = ss.componentStatuses[i].componentUnit
-        //console.debug("comp: "+ compId + " - "  + compType +" - " + compValue);
+     for(i=0; i<ss.deviceStatuses.length; i++){
+        var compId = ss.deviceStatuses[i].id
+        var compType = ss.deviceStatuses[i].deviceType
+        var compAnalogueState = ss.deviceStatuses[i].analogueState
+        var compDigitalState = ss.deviceStatuses[i].digitalState
+        var compUnit = ss.deviceStatuses[i].units
+//        console.debug("comp: "+ compId + " - "  + compType +" - " + compAnalogueState +" - "+ compDigitalState);
 
         switch(compType){
-          case 0: {$("#device-val"+compId).text(formatTimer(compValue)); break;} //TIMER
-          case 1: {$("#device-val"+compId).text(compValue+" "+compUnit); break;} //ANALOGUE_IN / Thermometer
-          case 2: {$("#device-val"+compId).text(compValue+" "+compUnit); break;} //ANALOGUE OUT / Heater
+          case 0: {$("#device-val"+compId).text(formatTimer(compAnalogueState)); break;} //TIMER
+          case 1: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE_IN / Thermometer
+          case 2: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE OUT / Heater
           case 4: {                                                              //DIGITAL_OUT
-            if(compValue == "true") $("#device-true"+compId).prop("checked", true)
+            if(compDigitalState == "true") $("#device-true"+compId).prop("checked", true)
             else $("#device-false"+compId).prop("checked", true);
             break;
           }
@@ -74,14 +75,15 @@
 
   function updateMonitors(ss){
     for(i=0; i<ss.monitorStatuses.length; i++){
-       var monitorId = ss.monitorStatuses[i].componentId
-       var monitorEnabled = ss.monitorStatuses[i].enabled
-       var monitorTemp = ss.monitorStatuses[i].temperature
-       var sensorTemp = ss.monitorStatuses[i].sensorStatus.componentValue
-       var increaserPower = ss.monitorStatuses[i].increaserStatus.componentValue
-       var sensorUnit = ss.monitorStatuses[i].sensorStatus.componentUnit
-       var increaserUnit = ss.monitorStatuses[i].increaserStatus.componentUnit
+       var monitorId = ss.monitorStatuses[i].id
+       var monitorEnabled = ss.monitorStatuses[i].digitalState
+       var monitorTemp = ss.monitorStatuses[i].analogueState
+       var sensorTemp = ss.monitorStatuses[i].monitorSensor.analogueState
+       var increaserPower = ss.monitorStatuses[i].monitorIncreaser.analogueState
+       var sensorUnit = ss.monitorStatuses[i].monitorSensor.units
+       var increaserUnit = ss.monitorStatuses[i].monitorIncreaser.units
 
+        console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
             else $("#monitor-false"+monitorId).prop("checked", true);
 
@@ -96,7 +98,7 @@
 
 $(function() {
     console.debug("Initialising...")
-    // sequencerStatusCall();  Mute this out for now.
+    sequencerStatusCall();  //Mute this out for now.
 });
 
 function initEvents(){
