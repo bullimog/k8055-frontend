@@ -2,31 +2,34 @@ package controllers
 
 
 import connectors.K8055Connector
-import model.Device._
 import model._
 import play.api.libs.json.Json
-import play.api.routing.{JavaScriptReverseRouter, JavaScriptReverseRoute}
+import play.api.routing.JavaScriptReverseRouter
 import play.api.mvc._
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class StatusController extends Controller {
 
   def present = Action.async {
     implicit request => {
-      Future.successful(Ok(views.html.index(K8055Connector.k8055State)))
+      K8055Connector.k8055State.map(dc =>
+        Ok(views.html.index(dc))
+      )
     }
   }
 
 
-  def sequencerStatus() = Action { implicit request =>
+  def sequencerStatus() = Action.async { implicit request =>
 
-    println("######### getSequencerStatus")
+    //println("######### getSequencerStatus")
     //running, currentStep, componentStatuses, monitorStatuses
-    val deviceStatuses = K8055Connector.k8055State.devices.filter(device => device.deviceType != Device.MONITOR)
-    val monitorStatuses = K8055Connector.k8055State.devices.filter(device => device.deviceType == Device.MONITOR)
-    val ss = AppStatus(false, 1, deviceStatuses, monitorStatuses)
-    Ok(Json.toJson(ss).toString())
+    K8055Connector.k8055State.map(dc => {
+      val deviceStatuses = dc.devices.filter(device => device.deviceType != Device.MONITOR)
+      val monitorStatuses = dc.devices.filter(device => device.deviceType == Device.MONITOR)
+      val ss = AppStatus(false, 1, deviceStatuses, monitorStatuses)
+      Ok(Json.toJson(ss).toString())
+    })
   }
 
   def setDeviceState(deviceId: String, state:String) = Action { implicit request =>
