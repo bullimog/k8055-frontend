@@ -27,7 +27,7 @@ class StatusController extends Controller {
     K8055Connector.k8055State.map(dc => {
       val deviceStatuses = dc.devices.filter(device => device.deviceType != Device.MONITOR)
       val monitorStatuses = dc.devices.filter(device => device.deviceType == Device.MONITOR)
-      val ss = AppStatus(false, 1, deviceStatuses, monitorStatuses)
+      val ss = AppStatus(running = false, 1, deviceStatuses, monitorStatuses)
       Ok(Json.toJson(ss).toString())
     })
   }

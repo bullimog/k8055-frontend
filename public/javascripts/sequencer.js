@@ -45,7 +45,7 @@
         var compAnalogueState = ss.deviceStatuses[i].analogueState
         var compDigitalState = ss.deviceStatuses[i].digitalState
         var compUnit = ss.deviceStatuses[i].units
-//        console.debug("comp: "+ compId + " - "  + compType +" - " + compAnalogueState +" - "+ compDigitalState);
+        console.debug("comp: "+ compId + " - "  + compType +" - " + compAnalogueState +" - "+ compDigitalState);
 
         switch(compType){
           case 0: {$("#device-val"+compId).text(formatTimer(compAnalogueState)); break;} //TIMER
@@ -83,7 +83,7 @@
        var sensorUnit = ss.monitorStatuses[i].monitorSensor.units
        var increaserUnit = ss.monitorStatuses[i].monitorIncreaser.units
 
-        console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
+    //    console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
             else $("#monitor-false"+monitorId).prop("checked", true);
 

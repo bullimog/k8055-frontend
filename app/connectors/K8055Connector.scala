@@ -1,15 +1,12 @@
 package connectors
 
-import java.io.FileNotFoundException
-
 import model.Device._
-import model.{DeviceCollection, RawDeviceCollection, RawDevice}
+import model.{DeviceCollection, RawDeviceCollection}
 import play.api.libs.json.{JsError, JsSuccess, Json, JsValue}
-import play.api.libs.ws.{WSRequest, WS, WSRequestHolder, WSResponse}
-import play.api.mvc.Result
+import play.api.libs.ws.{WSRequest, WS, WSResponse}
+import Configuration._
 
 import scala.concurrent.Future
-import scala.io.Source
 
 //had to add these two in, to get WS stuff to work
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -30,21 +27,21 @@ trait K8055Connector {
     }
   }
 
-  def k8055State:Future[DeviceCollection]  = {
 
-    doGet("http://localhost:9001/devices") match {
-      case Some(theFuture) => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
-        wsresponse.status match {                                     // match on the response status code (int)
+  def k8055State:Future[DeviceCollection]  = {
+    doGet(k8055Host + k8055Devices).fold(Future(buildEmptyDeviceCollection("No response from server"))) {
+      theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
+        wsresponse.status match {                          // match on the response status code (int)
           case 200 => DeviceCollection.rawToDeviceCollection(parseDeviceCollection(wsresponse.body).get)
-          case 404 => buildDeviceCollection("Server is found")
-          case _ => buildDeviceCollection("Server is found")
+          case 404 => buildEmptyDeviceCollection("Devices not Found")
+          case _ => buildEmptyDeviceCollection("Server Error??")
         }
       }
-      case None => Future(buildDeviceCollection("Server is found"))
     }
   }
 
   def parseDeviceCollection(jsonSource:String):Option[RawDeviceCollection] = {
+    //println("#############jsonSource: " + jsonSource)
     val json: JsValue = Json.parse(jsonSource)
     json.validate[RawDeviceCollection] match {
       case s: JsSuccess[RawDeviceCollection] => Some(s.get)
@@ -52,24 +49,11 @@ trait K8055Connector {
     }
   }
 
-
-
-//  def get8055State:DeviceCollection = {
-//    doGet("http://www.google.com").fold(buildDeviceCollection("No response from server")) {
-//      theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
-//        wsresponse.status match {                          // match on the response status code (int)
-//          case 200 => buildDeviceCollection("Server is found") //wsresponse.body
-//          case 404 => buildDeviceCollection("Server not found")
-//          case _ => buildDeviceCollection("Huh?")
-//        }
-//      }
-//    }
-//  }
-
-  def buildDeviceCollection(errorText:String):DeviceCollection = {
+  def buildEmptyDeviceCollection(errorText:String):DeviceCollection = {
     val rdc:RawDeviceCollection = RawDeviceCollection(errorText, "Error", List())
     DeviceCollection.rawToDeviceCollection(rdc)
   }
+
 
 //  def k8055State:DeviceCollection = {
 //    val rPump = RawDevice("DO-1", "Pump", DIGITAL_OUT, 1, digitalState = Some(true))
