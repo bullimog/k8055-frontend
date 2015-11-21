@@ -8,14 +8,27 @@ import play.api.routing.JavaScriptReverseRouter
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class StatusController extends Controller {
+object StatusController extends Controller with StatusController{
+  lazy val k8055Connector = K8055Connector
+}
+
+trait StatusController  {
+  this: Controller =>
+  val k8055Connector:K8055Connector
 
   def present = Action.async {
     implicit request => {
-      K8055Connector.k8055State.map(dc =>
+      k8055Connector.k8055State.map(dc =>
         Ok(views.html.index(dc))
       )
+    }
+  }
+
+  def present1 = Action.async {
+    implicit request => {
+      Future.successful(Ok(""))
     }
   }
 
@@ -43,6 +56,4 @@ class StatusController extends Controller {
       controllers.routes.javascript.StatusController.sequencerStatus
     )).as("text/javascript")
   }
-
-
 }
