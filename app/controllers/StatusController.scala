@@ -26,28 +26,21 @@ trait StatusController  {
     }
   }
 
-  def present1 = Action.async {
-    implicit request => {
-      Future.successful(Ok(""))
-    }
-  }
-
-
   def sequencerStatus() = Action.async { implicit request =>
 
     //println("######### getSequencerStatus")
     //running, currentStep, componentStatuses, monitorStatuses
-    K8055Connector.k8055State.map(dc => {
+    k8055Connector.k8055State.map(dc => {
       val deviceStatuses = dc.devices.filter(device => device.deviceType != Device.MONITOR)
       val monitorStatuses = dc.devices.filter(device => device.deviceType == Device.MONITOR)
       val ss = AppStatus(running = false, 1, deviceStatuses, monitorStatuses)
-      Ok(Json.toJson(ss).toString())
+      Ok(Json.toJson(ss))
     })
   }
 
-  def setDeviceState(deviceId: String, state:String) = Action { implicit request =>
+  def setDeviceState(deviceId: String, state:String) = Action.async { implicit request =>
     println(s"########## deviceId: $deviceId; setDeviceState:$state")
-    Ok("Ok")
+    Future.successful(Ok("Ok"))
   }
 
   def javascriptReverseRoutes = Action { implicit request =>

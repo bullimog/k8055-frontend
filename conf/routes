@@ -5,8 +5,8 @@
 # Home page
 GET     /                           controllers.StatusController.present
 
-GET     /setDeviceState/            controllers.StatusController.setDeviceState(component:String, value:String)
-GET     /sequencerStatus/           controllers.StatusController.sequencerStatus
+GET     /setDeviceState             controllers.StatusController.setDeviceState(component:String, value:String)
+GET     /sequencerStatus            controllers.StatusController.sequencerStatus
 GET     /javascriptReverseRoutes    controllers.StatusController.javascriptReverseRoutes
 
 

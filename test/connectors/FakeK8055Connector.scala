@@ -1,8 +1,10 @@
-import connectors.K8055Connector
-import model.{RawDeviceCollection, RawDevice, DeviceCollection}
+package connectors
+
 import model.Device._
-import scala.concurrent.Future
+import model.{DeviceCollection, RawDevice, RawDeviceCollection}
+
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 object FakeK8055Connector extends FakeK8055Connector
 trait FakeK8055Connector extends K8055Connector {
