@@ -9,13 +9,13 @@ import scala.concurrent.Future
 
 object StatusControllerSpec extends PlaySpecification with Results {
 
-  class TestController() extends Controller with StatusController{    lazy val k8055Connector = FakeK8055Connector}
+  class TestController() extends Controller with StatusController{lazy val k8055Connector = FakeK8055Connector}
   "Example Page#index" should {
     "should be valid" in {
       val controller = new TestController
       val result: Future[Result] = controller.present().apply(FakeRequest())
       val bodyText: String = contentAsString(result)
-      bodyText must contain("Devices")
+      bodyText must contain("My Fake Device Collection")
     }
   }
 }
