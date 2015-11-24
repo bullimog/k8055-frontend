@@ -28,17 +28,23 @@ trait StatusController  {
 
   def sequencerStatus() = Action.async { implicit request =>
     k8055Connector.k8055State.map(dc => {
-      val partitionedStatuses = dc.devices.partition(device => device.deviceType == Device.MONITOR)
+      val componentsAndMonitors = dc.devices.partition(device => device.deviceType != Device.MONITOR)
+      val firstStep = 1
 
       //running, currentStep, componentStatuses, monitorStatuses
-      val ss = AppStatus(running = false, 1, partitionedStatuses._2, partitionedStatuses._1)
+      val ss = AppStatus(running = false, firstStep, componentsAndMonitors._1, componentsAndMonitors._2)
       Ok(Json.toJson(ss))
     })
   }
 
   def setDeviceState(deviceId: String, state:String) = Action.async { implicit request =>
     println(s"########## deviceId: $deviceId; setDeviceState:$state")
-    Future.successful(Ok("Ok"))
+    K8055Connector.setK8055State(deviceId, state).map(result =>
+      if(result)
+        Ok("Ok")
+      else
+        BadRequest("Not Ok")
+    )
   }
 
   def javascriptReverseRoutes = Action { implicit request =>

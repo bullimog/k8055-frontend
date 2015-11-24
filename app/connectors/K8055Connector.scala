@@ -5,6 +5,7 @@ import model.{DeviceCollection, RawDeviceCollection}
 import play.api.libs.json.{JsError, JsSuccess, Json, JsValue}
 import play.api.libs.ws.{WSRequest, WS, WSResponse}
 import Configuration._
+import sun.font.TrueTypeFont
 
 import scala.concurrent.Future
 
@@ -19,9 +20,7 @@ trait K8055Connector {
 
   def doGet(url: String): Option[Future[WSResponse]] = {
     val holder: WSRequest = WS.url(url)
-    try {
-      Some(holder.get())
-    }
+    try {Some(holder.get())}
     catch {
       case _: java.lang.NullPointerException => None
     }
@@ -29,6 +28,12 @@ trait K8055Connector {
 
 
   def k8055State:Future[DeviceCollection]  = {
+
+    def buildEmptyDeviceCollection(errorText:String):DeviceCollection = {
+      val rdc:RawDeviceCollection = RawDeviceCollection(errorText, "Error", List())
+      DeviceCollection.rawToDeviceCollection(rdc)
+    }
+
     doGet(k8055Host + k8055Devices).fold(Future(buildEmptyDeviceCollection("No response from server"))) {
       theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
         wsresponse.status match {                          // match on the response status code (int)
@@ -49,23 +54,9 @@ trait K8055Connector {
     }
   }
 
-  def buildEmptyDeviceCollection(errorText:String):DeviceCollection = {
-    val rdc:RawDeviceCollection = RawDeviceCollection(errorText, "Error", List())
-    DeviceCollection.rawToDeviceCollection(rdc)
+
+  def setK8055State(deviceId: String, state: String):Future[Boolean]  = {
+    Future(true)
   }
-
-
-//  def k8055State:DeviceCollection = {
-//    val rPump = RawDevice("DO-1", "Pump", DIGITAL_OUT, 1, digitalState = Some(true))
-//    val rHeater = RawDevice("AO-1", "Heater", ANALOGUE_OUT, 1, Some("%"), Some(0), analogueState = Some(22))
-//    val rSwitch = RawDevice("DI-1", "Switch", DIGITAL_IN, 1, digitalState = Some(true))
-//    val rThermometer = RawDevice("AI-1", "Thermometer", ANALOGUE_IN, 1, Some("°c"), Some(0), analogueState = Some(17))
-//    val rThermostat = RawDevice("MO-1", "Thermostat", MONITOR, 1, Some("c"), None, None, None, Some("AI-1"),
-//      Some("AO-1"), None, Some(true), Some(56) )
-//    val rawDevices: List[RawDevice] = List(rPump, rHeater, rSwitch, rThermometer, rThermostat)
-//    val rdc:RawDeviceCollection = RawDeviceCollection("My Device Collection", "For Brewing", rawDevices)
-//
-//    DeviceCollection.rawToDeviceCollection(rdc)
-//  }
 
 }
