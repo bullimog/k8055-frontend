@@ -13,6 +13,8 @@ libraryDependencies ++= Seq(
   specs2 % Test
 )
 
+libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.4" % "test"
+
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 // Play provides two styles of routers, one expects its actions to be injected, the

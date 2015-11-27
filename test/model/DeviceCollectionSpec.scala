@@ -1,6 +1,5 @@
 package model
 
-import model.DeviceSpec._
 import play.api.mvc.Results
 import play.api.test.PlaySpecification
 
