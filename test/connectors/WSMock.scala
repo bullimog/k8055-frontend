@@ -10,17 +10,20 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object WSMock extends org.specs2.mock.Mockito  {
 
-  def getMockWSResponse:Option[Future[WSResponse]] = {
+  def getMockWSResponse(status:Int):Option[Future[WSResponse]] = {
     val response = mock[WSResponse]
 
     import play.api.http.HeaderNames
-    response.status returns OK
     response.header(HeaderNames.CONTENT_TYPE) returns Some("application/json")
     response.body returns Json.toJson(makeRawDeviceCollection).toString()
+    response.status returns status
+    response.body returns Json.toJson(makeRawDeviceCollection).toString()
+
+
     Option(Future(response))
   }
 
-  def makeRawDeviceCollection = {
+  def makeRawDeviceCollection:RawDeviceCollection = {
     val rPump = RawDevice("DO-1", "Pump", DIGITAL_OUT, 1, digitalState = Some(true))
     val rHeater = RawDevice("AO-1", "Heater", ANALOGUE_OUT, 1, Some("%"), Some(0), analogueState = Some(22))
     val rSwitch = RawDevice("DI-1", "Switch", DIGITAL_IN, 1, digitalState = Some(true))

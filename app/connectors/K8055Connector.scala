@@ -5,7 +5,7 @@ import model.{DeviceCollection, RawDeviceCollection}
 import play.api.libs.json.{JsError, JsSuccess, Json, JsValue}
 import play.api.libs.ws.{WSRequest, WS, WSResponse}
 import Configuration._
-import sun.font.TrueTypeFont
+import play.api.http.Status._
 
 import scala.concurrent.Future
 
@@ -37,8 +37,8 @@ trait K8055Connector {
     doGet(k8055Host + k8055Devices).fold(Future(buildEmptyDeviceCollection("No response from server"))) {
       theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
         wsresponse.status match {                          // match on the response status code (int)
-          case 200 => DeviceCollection.rawToDeviceCollection(parseDeviceCollection(wsresponse.body).get)
-          case 404 => buildEmptyDeviceCollection("Devices not Found")
+          case OK => DeviceCollection.rawToDeviceCollection(parseDeviceCollection(wsresponse.body).get)
+          case NOT_FOUND => buildEmptyDeviceCollection("Devices not Found")
           case _ => buildEmptyDeviceCollection("Server Error??")
         }
       }
