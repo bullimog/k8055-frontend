@@ -30,14 +30,14 @@ trait K8055Connector {
   def k8055State:Future[DeviceCollection]  = {
 
     def buildEmptyDeviceCollection(errorText:String):DeviceCollection = {
-      val rdc:RawDeviceCollection = RawDeviceCollection(errorText, "Error", List())
-      DeviceCollection.rawToDeviceCollection(rdc)
+      DeviceCollection.rawToDeviceCollection(buildEmptyRawDeviceCollection(errorText))
     }
 
     doGet(k8055Host + k8055Devices).fold(Future(buildEmptyDeviceCollection("No response from server"))) {
       theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
         wsresponse.status match {                          // match on the response status code (int)
-          case OK => DeviceCollection.rawToDeviceCollection(parseDeviceCollection(wsresponse.body).get)
+          case OK => DeviceCollection.rawToDeviceCollection(parseDeviceCollection(wsresponse.body).
+            getOrElse(buildEmptyRawDeviceCollection("Couldn't parse device collection")))
           case NOT_FOUND => buildEmptyDeviceCollection("Devices not Found")
           case _ => buildEmptyDeviceCollection("Server Error??")
         }
@@ -45,11 +45,14 @@ trait K8055Connector {
     }
   }
 
+  def buildEmptyRawDeviceCollection(errorText:String):RawDeviceCollection = {
+    RawDeviceCollection(errorText, "Error", List())
+  }
+
   def parseDeviceCollection(jsonSource:String):Option[RawDeviceCollection] = {
-    //println("#############jsonSource: " + jsonSource)
     val json: JsValue = Json.parse(jsonSource)
     json.validate[RawDeviceCollection] match {
-      case s: JsSuccess[RawDeviceCollection] => Some(s.get)
+      case s: JsSuccess[RawDeviceCollection] => Some(s.getOrElse(buildEmptyRawDeviceCollection("Couldn't parse Json")))
       case e: JsError => None
     }
   }
