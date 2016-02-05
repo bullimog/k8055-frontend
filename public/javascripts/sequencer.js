@@ -124,6 +124,7 @@ var sequencerStatusCall = function() {
 };
 
 var  onSuccess = function(strSequenceStatus) {
+    //console.debug("json is..."+strSequenceStatus)
     var ss = JSON.parse(strSequenceStatus);
     highlightStartStopButtons(ss.running)
     highlightSteps(ss.currentStep)

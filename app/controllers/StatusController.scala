@@ -35,7 +35,7 @@ trait StatusController  {
     //  println(s"############# sequenceStatus: $componentsAndMonitors")
       //running, currentStep, componentStatuses, monitorStatuses
       val ss = AppStatus(running = false, firstStep, componentsAndMonitors._1, componentsAndMonitors._2)
-      Ok(Json.toJson(ss).toString()).as(MimeTypes.JSON)
+      Ok(Json.toJson(ss)).as(MimeTypes.TEXT)
     })
   }
 
