@@ -2,13 +2,17 @@ package controllers
 
 import connectors.FakeK8055Connector
 import play.api.mvc._
+import play.api.test.Helpers._
 import play.api.test._
 
 import scala.concurrent.Future
 
 object StatusControllerSpec extends PlaySpecification with Results {
 
-  class TestController() extends Controller with StatusController{lazy val k8055Connector = FakeK8055Connector}
+  class TestController() extends Controller with StatusController{
+    lazy val k8055Connector = FakeK8055Connector
+  }
+
   val controller = new TestController
   "The Status Controller" should {
     "render the status page from the present method" in {
@@ -28,9 +32,11 @@ object StatusControllerSpec extends PlaySpecification with Results {
     }
 
     "allow a component status to be set" in {
-      val result: Future[Result] = controller.setDeviceState("deviceId", "state").apply(FakeRequest())
-      contentType(result) must equalTo(Some("text/plain"))
-      status(result) must equalTo(200)
+      running(FakeApplication()) {
+        val result: Future[Result] = controller.setDeviceState("DO-1", "true").apply(FakeRequest())
+        contentType(result) must equalTo(Some("text/plain"))
+        status(result) must equalTo(200)
+      }
     }
 
     "provide javascript routes for AJAX calls" in {

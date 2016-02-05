@@ -66,12 +66,7 @@ class K8055ConnectorSpec extends PlaySpecification {
     ordc must be (None)
   }
 
-  //pointless test...?
-  "set the device state on the K8055 microservice" in {
-    val result = await(K8055Connector.setK8055State("ID-Test", "1"))
-    result must equalTo(true)
 
-  }
 }
 
 

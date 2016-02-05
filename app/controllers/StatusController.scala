@@ -8,7 +8,8 @@ import play.api.routing.JavaScriptReverseRouter
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import play.api.Logger
+import play.mvc.Http.MimeTypes
 
 object StatusController extends Controller with StatusController{
   lazy val k8055Connector = K8055Connector
@@ -31,19 +32,21 @@ trait StatusController  {
       val componentsAndMonitors = dc.devices.partition(device => device.deviceType != Device.MONITOR)
       val firstStep = 1
 
+    //  println(s"############# sequenceStatus: $componentsAndMonitors")
       //running, currentStep, componentStatuses, monitorStatuses
       val ss = AppStatus(running = false, firstStep, componentsAndMonitors._1, componentsAndMonitors._2)
-      Ok(Json.toJson(ss))
+      Ok(Json.toJson(ss).toString()).as(MimeTypes.JSON)
     })
   }
 
   def setDeviceState(deviceId: String, state:String) = Action.async { implicit request =>
-    println(s"########## deviceId: $deviceId; setDeviceState:$state")
+    Logger.info(s"StatusController.setDeviceState: deviceId: $deviceId; setDeviceState:$state")
     K8055Connector.setK8055State(deviceId, state).map(result =>
-      if(result)
-        Ok("Ok")
-      else
+      if(result) Ok("Ok")
+      else{
+        Logger.warn("StatusController.setDeviceState setK8055State failed")
         BadRequest("Not Ok")
+      }
     )
   }
 
@@ -51,6 +54,6 @@ trait StatusController  {
     Ok(JavaScriptReverseRouter("jsRoutes")(
       controllers.routes.javascript.StatusController.setDeviceState,
       controllers.routes.javascript.StatusController.sequencerStatus
-    )).as("text/javascript")
+    )).as(MimeTypes.JAVASCRIPT) //"text/javascript"
   }
 }
