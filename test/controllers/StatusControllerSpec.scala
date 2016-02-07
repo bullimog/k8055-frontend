@@ -25,7 +25,7 @@ object StatusControllerSpec extends PlaySpecification with Results {
 
     "provide a list of list of component statuses" in {
       val result: Future[Result] = controller.sequencerStatus().apply(FakeRequest())
-      contentType(result) must equalTo(Some("application/json"))
+      contentType(result) must equalTo(Some("text/plain"))
       val bodyText: String = contentAsString(result)
       bodyText must contain("\"deviceStatuses\":[{\"id\":\"DO-1\"")  //Check the first device is in right place
       bodyText must contain("monitorStatuses\":[{\"id\":\"MO-1\"")  //Check the monitor is in right place
