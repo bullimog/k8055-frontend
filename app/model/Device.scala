@@ -7,10 +7,9 @@ import scala.annotation.tailrec
 
 
 case class Device(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
-                  conversionFactor:Option[Double] = None, conversionOffset:Option[Double] = None,
-                  decimalPlaces:Option[Int] = None, monitorSensor:Option[Device] = None,
-                  monitorIncreaser:Option[Device] = None, monitorDecreaser:Option[Device] = None,
-                  digitalState:Option[Boolean] = None, analogueState:Option[Int] = None)
+                  monitorSensor:Option[Device] = None, monitorIncreaser:Option[Device] = None,
+                  monitorDecreaser:Option[Device] = None, digitalState:Option[Boolean] = None,
+                  analogueState:Option[Double] = None)
 
 object Device {
   val TIMER = 0         // e.g. Clock
@@ -26,14 +25,11 @@ object Device {
     (JsPath \ "deviceType").read[Int] and
     (JsPath \ "channel").read[Int] and
     (JsPath \ "units").readNullable[String] and
-    (JsPath \ "conversionFactor").readNullable[Double] and
-    (JsPath \ "conversionOffset").readNullable[Double] and
-    (JsPath \ "decimalPlaces").readNullable[Int] and
     (JsPath \ "monitorSensor").readNullable[Device] and
     (JsPath \ "monitorIncreaser").readNullable[Device] and
     (JsPath \ "monitorDecreaser").readNullable[Device] and
     (JsPath \ "digitalState").readNullable[Boolean] and
-    (JsPath \ "analogueState").readNullable[Int]
+    (JsPath \ "analogueState").readNullable[Double]
   )(Device.apply _)
 
   implicit val deviceWrites = Json.writes[Device]
@@ -53,9 +49,14 @@ object Device {
     val monitorIncreaser = innerConvert(rawDevice.monitorIncreaser)
     val monitorDecreaser = innerConvert(rawDevice.monitorDecreaser)
 
-    Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units, rawDevice.conversionFactor,
-      rawDevice.conversionOffset, rawDevice.decimalPlaces, monitorSensor, monitorIncreaser, monitorDecreaser,
-      rawDevice.digitalState, rawDevice.analogueState)
+    //calculate Analogue state...
+    val raw:Double = rawDevice.analogueState.getOrElse(0).toDouble
+    val unrounded:Double = raw * rawDevice.conversionFactor.getOrElse(1.0) + rawDevice.conversionOffset.getOrElse(0.0)
+    val roundFactor:Double = math.pow(10.0, rawDevice.decimalPlaces.getOrElse(0).toDouble)
+    val analogueState:Option[Double] = Some(math.round(unrounded*roundFactor)/roundFactor)
+
+    Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units,
+       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState)
   }
 }
 
