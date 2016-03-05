@@ -1,6 +1,6 @@
 
 @import model.Device._
-@(deviceCollection: model.DeviceCollection)
+@(sequence: model.ReadableSequence, deviceCollection: model.DeviceCollection)
 
 @main("K8055 Title") {
 <h1>@deviceCollection.name</h1>
@@ -54,8 +54,27 @@
             }}
         </p>
         }
-
     </fieldset>
+
+    <fieldset>
+        <legend>Program</legend>
+        <table class="program">
+            <tr><th>#</th><th>Component</th><th>Action</th></tr>
+            @sequence.readableSteps.map {step =>
+            <tr id="step@step.id">
+                <td>@step.id</td>
+                <td id="stepDevice@step.id">@step.deviceDescription</td>
+                <td id="stepDesc@step.id">@step.description @step.value</td>
+            </tr>
+            }
+        </table>
+    </fieldset>
+
+    <p class="form-field">
+        <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
+        <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Abort</button>
+        <a href="components">Configure</a>
+    </p>
 
 </div>
 }

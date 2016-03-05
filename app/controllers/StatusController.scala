@@ -1,7 +1,7 @@
 package controllers
 
 
-import connectors.K8055Connector
+import connectors.{SequencerConnector, K8055Connector}
 import model._
 import play.api.libs.json.Json
 import play.api.routing.JavaScriptReverseRouter
@@ -12,18 +12,23 @@ import play.api.Logger
 import play.mvc.Http.MimeTypes
 
 object StatusController extends Controller with StatusController{
+
   lazy val k8055Connector = K8055Connector
+  lazy val sequencerConnector = SequencerConnector
 }
 
 trait StatusController  {
   this: Controller =>
   val k8055Connector:K8055Connector
+  val sequencerConnector:SequencerConnector
 
   def present = Action.async {
     implicit request => {
-      k8055Connector.k8055State.map(dc =>
-        Ok(views.html.index(dc))
-      )
+      sequencerConnector.sequenceState.flatMap{rs =>
+        k8055Connector.k8055State.map { dc =>
+          Ok(views.html.index(rs, dc))
+        }
+      }
     }
   }
 
