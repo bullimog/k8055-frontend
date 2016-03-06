@@ -20,7 +20,14 @@ trait Configuration {
   val isFalse = "false"
 
   val sequencerHost = Play.current.configuration.getString("sequencer.host").fold("badSequencerHostConfig") (filename => filename)
-  val sequencerState = Play.current.configuration.getString("sequencer.statePath").fold("badSequencerConfig") (filename => filename)
+  val sequencerState = Play.current.configuration.getString("sequencer.statePath").fold("badSequencerStateConfig") (filename => filename)
+  val sequence = Play.current.configuration.getString("sequencer.sequencePath").fold("badSequenceConfig") (filename => filename)
+  val start = Play.current.configuration.getString("sequencer.startPath").fold("badSequencerStartConfig") (filename => filename)
+  val stop = Play.current.configuration.getString("sequencer.stopPath").fold("badSequencerStopConfig") (filename => filename)
+  val reset = Play.current.configuration.getString("sequencer.resetPath").fold("badSequencerResetConfig") (filename => filename)
+  val nextStep = Play.current.configuration.getString("sequencer.nextStepPath").fold("badNextStepConfig") (filename => filename)
+  val previousStep = Play.current.configuration.getString("sequencer.previousStepPath").fold("badPreviousStepConfig") (filename => filename)
+
 }
 
 object Configuration extends Configuration

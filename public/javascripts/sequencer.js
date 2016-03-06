@@ -1,7 +1,7 @@
 
   function highlightSteps(current){
 
-  //console.debug("current="+current)
+  console.debug("current="+current)
 
 //    if(current >= 0) {
       var steps = $(".program").children().children();
@@ -45,7 +45,7 @@
         var compAnalogueState = ss.deviceStatuses[i].analogueState
         var compDigitalState = ss.deviceStatuses[i].digitalState
         var compUnit = ss.deviceStatuses[i].units
-        console.debug("comp: "+ compId + " - "  + compType +" - " + compAnalogueState +" - "+ compDigitalState);
+        //console.debug("comp: "+ compId + " - "  + compType +" - " + compAnalogueState +" - "+ compDigitalState);
 
         switch(compType){
           case 0: {$("#device-val"+compId).text(formatTimer(compAnalogueState)); break;} //TIMER
@@ -96,6 +96,9 @@
 
   function startSequencer(){jsRoutes.controllers.StatusController.startSequencer(null).ajax();};
   function stopSequencer(){jsRoutes.controllers.StatusController.stopSequencer(null).ajax();};
+  function resetSequencer(){jsRoutes.controllers.StatusController.resetSequencer(null).ajax();};
+  function nextStep(){jsRoutes.controllers.StatusController.nextStep(null).ajax();};
+  function previousStep(){jsRoutes.controllers.StatusController.previousStep(null).ajax();};
 
 $(function() {
     console.debug("Initialising...")

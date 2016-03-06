@@ -1,7 +1,7 @@
 package connectors
 
 import connectors.Configuration._
-import model.{ReadableSequence, RawDeviceCollection, DeviceCollection, DeviceState}
+import model._
 import play.api.Logger
 import play.api.http.HttpVerbs
 import play.api.http.Status._
@@ -27,18 +27,42 @@ trait SequencerConnector {
     }
   }
 
-  def sequenceState:Future[ReadableSequence]  = {
+  def startSequencer = doGet(sequencerHost + start)
+  def stopSequencer = doGet(sequencerHost + stop)
+  def resetSequencer = doGet(sequencerHost + reset)
+  def nextSequencerStep = doGet(sequencerHost + nextStep)
+  def previousSequencerStep = doGet(sequencerHost + previousStep)
+
+  //TODO: This could be generic....
+  def getSequence:Future[ReadableSequence]  = {
 
     def buildEmptyReadableSequence(errorText:String):ReadableSequence = {
-      ReadableSequence("Empty Sequence", List(), 0, running = false)
+      ReadableSequence("Empty Sequence", List())
     }
 
-    doGet(sequencerHost + sequencerState).fold(Future(buildEmptyReadableSequence("No response from server"))) {
+    doGet(sequencerHost + sequence).fold(Future(buildEmptyReadableSequence("No response from server"))) {
       theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
         wsresponse.status match {                          // match on the response status code (int)
           case OK => parseReadableSequence(wsresponse.body).fold(buildEmptyReadableSequence("Couldn't parse sequence"))(rs=>rs)
           case NOT_FOUND => buildEmptyReadableSequence("Sequence not Found")
           case _ => buildEmptyReadableSequence("Server Error??")
+        }
+      }
+    }
+  }
+
+  def getSequenceState:Future[SequenceState]  = {
+
+    def buildDefaultSequenceState():SequenceState = {
+      SequenceState(false, 0)
+    }
+
+    doGet(sequencerHost + sequencerState).fold(Future(buildDefaultSequenceState())) {
+      theFuture => theFuture.map { wsresponse =>           // get the WSResponse out of the Future using map
+        wsresponse.status match {                          // match on the response status code (int)
+          case OK => parseSequenceState(wsresponse.body).fold(buildDefaultSequenceState())(ss=>ss)
+          case NOT_FOUND => buildDefaultSequenceState()
+          case _ => buildDefaultSequenceState()
         }
       }
     }
@@ -52,6 +76,15 @@ trait SequencerConnector {
     val json: JsValue = Json.parse(jsonSource)
     json.validate[ReadableSequence] match {
       case s: JsSuccess[ReadableSequence] => s.asOpt
+      case e: JsError => None
+    }
+  }
+
+
+  def parseSequenceState(jsonSource:String):Option[SequenceState] = {
+    val json: JsValue = Json.parse(jsonSource)
+    json.validate[SequenceState] match {
+      case s: JsSuccess[SequenceState] => s.asOpt
       case e: JsError => None
     }
   }

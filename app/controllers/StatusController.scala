@@ -24,7 +24,7 @@ trait StatusController  {
 
   def present = Action.async {
     implicit request => {
-      sequencerConnector.sequenceState.flatMap{rs =>
+      sequencerConnector.getSequence.flatMap{rs =>
         k8055Connector.k8055State.map { dc =>
           Ok(views.html.index(rs, dc))
         }
@@ -33,14 +33,15 @@ trait StatusController  {
   }
 
   def sequencerStatus() = Action.async { implicit request =>
-    k8055Connector.k8055State.map(dc => {
+    k8055Connector.k8055State.flatMap(dc => {
       val componentsAndMonitors = dc.devices.partition(device => device.deviceType != Device.MONITOR)
-      val firstStep = 1
 
-    //  println(s"############# sequenceStatus: $componentsAndMonitors")
-      //running, currentStep, componentStatuses, monitorStatuses
-      val ss = AppStatus(running = false, firstStep, componentsAndMonitors._1, componentsAndMonitors._2)
-      Ok(Json.toJson(ss)).as(MimeTypes.TEXT)
+      sequencerConnector.getSequenceState.map { ss =>
+        //println(s"############# sequenceStatus: $componentsAndMonitors")
+        //running, currentStep, componentStatuses, monitorStatuses
+        val appStatus = AppStatus(ss.running, ss.currentStep, componentsAndMonitors._1, componentsAndMonitors._2)
+        Ok(Json.toJson(appStatus)).as(MimeTypes.TEXT)
+      }
     })
   }
 
@@ -55,10 +56,47 @@ trait StatusController  {
     )
   }
 
+  def startSequencer() = Action { implicit request =>
+    println("Started")
+    sequencerConnector.startSequencer
+    Ok("Started")
+  }
+
+  def stopSequencer() = Action { implicit request =>
+    println("Stopped")
+    sequencerConnector.stopSequencer
+    Ok("Stopped")
+  }
+
+  def resetSequencer() = Action { implicit request =>
+    println("Reset")
+    sequencerConnector.resetSequencer
+    Ok("Reset")
+  }
+
+  def nextStep() = Action { implicit request =>
+    println("Next")
+    sequencerConnector.nextSequencerStep
+    Ok("Next")
+  }
+
+  def previousStep() = Action { implicit request =>
+    println("Previous")
+    sequencerConnector.previousSequencerStep
+    Ok("Previous")
+  }
+
+
+
   def javascriptReverseRoutes = Action { implicit request =>
     Ok(JavaScriptReverseRouter("jsRoutes")(
       controllers.routes.javascript.StatusController.setDeviceState,
-      controllers.routes.javascript.StatusController.sequencerStatus
+      controllers.routes.javascript.StatusController.sequencerStatus,
+      controllers.routes.javascript.StatusController.startSequencer,
+      controllers.routes.javascript.StatusController.stopSequencer,
+      controllers.routes.javascript.StatusController.resetSequencer,
+      controllers.routes.javascript.StatusController.nextStep,
+      controllers.routes.javascript.StatusController.previousStep
     )).as(MimeTypes.JAVASCRIPT) //"text/javascript"
   }
 }
