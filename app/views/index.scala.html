@@ -36,7 +36,7 @@
         <legend>Devices</legend>
     @deviceCollection.devices.filter(d=>d.deviceType != model.Device.MONITOR).map {device =>
         <p id="device@device.id">
-            <label id="deviceDesc@device.id">@device.id: @device.description:&nbsp;</label>
+            <label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
             @{device.deviceType match {
                 case TIMER => Html("<span id=\"device-val"+device.id + "\"> 0 seconds </span>")
                 case ANALOGUE_IN => Html("<span id=\"device-val"+device.id + "\"> 0 "+ device.units.getOrElse("")+ "</span>")
@@ -47,7 +47,8 @@
                     " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'up')\">></button>" +
                     "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'dup')\">>></button>")
                 }
-                case DIGITAL_IN => Html("<span>A button :)</span>")
+                case DIGITAL_IN => Html("<input type=\"radio\" disabled name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">On "+
+            "<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-false"+device.id + "\" value=\"false\" onclick=\"makeCall('"+device.id+"', 'false')\" checked>Off ")
                 case DIGITAL_OUT => Html("<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">On "+
                            "<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-false"+device.id + "\" value=\"false\" onclick=\"makeCall('"+device.id+"', 'false')\" checked>Off ")
                 case _ => Html("<b>Bad Device</b>")
@@ -59,7 +60,7 @@
     <fieldset>
         <legend>Program</legend>
         <table class="program">
-            <tr><th>#</th><th>Component</th><th>Action</th></tr>
+            <tr><th>#</th><th>Device</th><th>Action</th></tr>
             @sequence.readableSteps.map {step =>
             <tr id="step@step.id">
                 <td>@step.id</td>
