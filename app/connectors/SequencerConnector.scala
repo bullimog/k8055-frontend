@@ -54,7 +54,7 @@ trait SequencerConnector {
   def getSequenceState:Future[SequenceState]  = {
 
     def buildDefaultSequenceState():SequenceState = {
-      SequenceState(false, 0)
+      SequenceState(false, 0, "")
     }
 
     doGet(sequencerHost + sequencerState).fold(Future(buildDefaultSequenceState())) {

@@ -1,7 +1,7 @@
 
   function highlightSteps(current){
 
-  console.debug("current="+current)
+  //console.debug("current="+current)
 
 //    if(current >= 0) {
       var steps = $(".program").children().children();
@@ -52,7 +52,7 @@
           case 1: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE_IN / Thermometer
           case 2: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE OUT / Heater
           case 4: {                                                              //DIGITAL_OUT
-            console.debug("case is Digital Out, compstate=["+compDigitalState+"]")
+            //console.debug("case is Digital Out, compstate=["+compDigitalState+"]")
             if(compDigitalState == true) $("#device-true"+compId).prop("checked", true)
             else $("#device-false"+compId).prop("checked", true);
             break;
@@ -129,10 +129,12 @@ var sequencerStatusCall = function() {
 var  onSuccess = function(strSequenceStatus) {
     //console.debug("json is..."+strSequenceStatus)
     var ss = JSON.parse(strSequenceStatus);
-    highlightStartStopButtons(ss.running)
-    highlightSteps(ss.currentStep)
+    highlightStartStopButtons(ss.sequenceState.running)
+    highlightSteps(ss.sequenceState.currentStep)
     updateDevices(ss)
     updateMonitors(ss)
+//    console.debug("======"+formatTimer(ss.sequenceState.timeRemaining))
+    $("#clock-val").text(formatTimer(ss.sequenceState.timeRemaining))
 }
 
 var onError = function(error) {

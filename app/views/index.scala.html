@@ -38,7 +38,6 @@
         <p id="device@device.id">
             <label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
             @{device.deviceType match {
-                case TIMER => Html("<span id=\"device-val"+device.id + "\"> 0 seconds </span>")
                 case ANALOGUE_IN => Html("<span id=\"device-val"+device.id + "\"> 0 "+ device.units.getOrElse("")+ "</span>")
                 case ANALOGUE_OUT => {
                     Html("<button id=\"device-down\"+device.id class=\"button\" onclick=\"makeCall('"+device.id+"', 'ddown')\"><<</button>" +
@@ -55,6 +54,12 @@
             }}
         </p>
         }
+
+        <p id="clock">
+            <label id="clock-desc">Clock:&nbsp;</label>
+            <span id="clock-val"> 0 </span>
+        </p>
+
     </fieldset>
 
     <fieldset>

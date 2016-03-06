@@ -36,10 +36,10 @@ trait StatusController  {
     k8055Connector.k8055State.flatMap(dc => {
       val componentsAndMonitors = dc.devices.partition(device => device.deviceType != Device.MONITOR)
 
-      sequencerConnector.getSequenceState.map { ss =>
+      sequencerConnector.getSequenceState.map { sequenceState =>
         //println(s"############# sequenceStatus: $componentsAndMonitors")
         //running, currentStep, componentStatuses, monitorStatuses
-        val appStatus = AppStatus(ss.running, ss.currentStep, componentsAndMonitors._1, componentsAndMonitors._2)
+        val appStatus = AppStatus(sequenceState, componentsAndMonitors._1, componentsAndMonitors._2)
         Ok(Json.toJson(appStatus)).as(MimeTypes.TEXT)
       }
     })
