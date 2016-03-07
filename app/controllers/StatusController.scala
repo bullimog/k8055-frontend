@@ -57,31 +57,26 @@ trait StatusController  {
   }
 
   def startSequencer() = Action { implicit request =>
-    println("Started")
     sequencerConnector.startSequencer
     Ok("Started")
   }
 
   def stopSequencer() = Action { implicit request =>
-    println("Stopped")
     sequencerConnector.stopSequencer
     Ok("Stopped")
   }
 
   def resetSequencer() = Action { implicit request =>
-    println("Reset")
     sequencerConnector.resetSequencer
     Ok("Reset")
   }
 
   def nextStep() = Action { implicit request =>
-    println("Next")
     sequencerConnector.nextSequencerStep
     Ok("Next")
   }
 
   def previousStep() = Action { implicit request =>
-    println("Previous")
     sequencerConnector.previousSequencerStep
     Ok("Previous")
   }
