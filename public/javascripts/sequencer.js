@@ -51,8 +51,13 @@
           case 0: {$("#device-val"+compId).text(formatTimer(compAnalogueState)); break;} //TIMER
           case 1: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE_IN / Thermometer
           case 2: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE OUT / Heater
+          case 3: {                                                              //DIGITAL_IN
+            //console.debug("case is Digital In, compstate=["+compDigitalState+"]")
+            if(compDigitalState == true) $("#device-true"+compId).prop("checked", true)
+            else $("#device-false"+compId).prop("checked", true);
+            break;
+          }
           case 4: {                                                              //DIGITAL_OUT
-            //console.debug("case is Digital Out, compstate=["+compDigitalState+"]")
             if(compDigitalState == true) $("#device-true"+compId).prop("checked", true)
             else $("#device-false"+compId).prop("checked", true);
             break;
@@ -81,16 +86,27 @@
        var monitorTemp = ss.monitorStatuses[i].analogueState
        var sensorTemp = ss.monitorStatuses[i].monitorSensor.analogueState
        var increaserPower = ss.monitorStatuses[i].monitorIncreaser.analogueState
+       var sensorType = ss.monitorStatuses[i].monitorSensor.deviceType
        var sensorUnit = ss.monitorStatuses[i].monitorSensor.units
        var increaserUnit = ss.monitorStatuses[i].monitorIncreaser.units
+       var sensorState = ss.monitorStatuses[i].monitorSensor.digitalState
+       var increaserState = ss.monitorStatuses[i].monitorIncreaser.digitalState
 
+       console.debug("monitor: " + sensorType)
     //    console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
             else $("#monitor-false"+monitorId).prop("checked", true);
 
        $("#monitor-temperature"+monitorId).text(monitorTemp+" "+sensorUnit);
-       $("#monitor-sensor"+monitorId).text(sensorTemp+" "+ sensorUnit);
-       $("#monitor-increaser"+monitorId).text(increaserPower+" "+increaserUnit);
+
+       if(sensorType == 1){
+         $("#monitor-sensor"+monitorId).text(sensorTemp+" "+ sensorUnit);
+         $("#monitor-increaser"+monitorId).text(increaserPower+" "+increaserUnit);
+       }
+       else{
+         $("#monitor-sensor"+monitorId).text(sensorState);
+         $("#monitor-increaser"+monitorId).text(increaserState);
+       }
     }
   }
 
