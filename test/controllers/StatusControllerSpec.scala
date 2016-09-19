@@ -1,6 +1,6 @@
 package controllers
 
-import connectors.FakeK8055Connector
+import connectors.{SequencerConnector, FakeK8055Connector}
 import play.api.mvc._
 import play.api.test.Helpers._
 import play.api.test._
@@ -11,6 +11,7 @@ object StatusControllerSpec extends PlaySpecification with Results {
 
   class TestController() extends Controller with StatusController{
     lazy val k8055Connector = FakeK8055Connector
+    lazy val sequencerConnector = SequencerConnector
   }
 
   val controller = new TestController
