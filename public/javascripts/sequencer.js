@@ -66,13 +66,22 @@
     totalSeconds %= 3600;
     mins= Math.floor(totalSeconds / 60);
     secs = totalSeconds % 60;
-    return (""+padZero(hours)+":"+padZero(mins)+":"+padZero(secs))
+    return (""+pad10Zero(hours)+":"+pad10Zero(mins)+":"+pad10Zero(secs))
   }
 
-  function padZero(num){
+  function pad10Zero(num){
     if(num<10) return "0"+num
     else return num
   }
+
+  function pad100Zero(num){
+    var withDecimals = num.toFixed(2)
+    var str = "" + withDecimals
+    var pad = "000000"
+    return pad.substring(0, pad.length - str.length) + str
+  }
+
+
 
   function updateMonitors(ss){
     for(i=0; i<ss.monitorStatuses.length; i++){
