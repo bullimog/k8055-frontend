@@ -52,13 +52,13 @@
           case 1: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE_IN / Thermometer
           case 2: {$("#device-val"+compId).text(compAnalogueState+" "+compUnit); break;} //ANALOGUE OUT / Heater
           case 3: {                                                              //DIGITAL_IN
-            //console.debug("case is Digital In, compstate=["+compDigitalState+"]")
-            if(compDigitalState == true) $("#device-true"+compId).prop("checked", true)
-            else $("#device-false"+compId).prop("checked", true);
+           // console.debug("case is Digital In, compstate=["+compDigitalState+"]")
+            if(compDigitalState) $("#device-true"+compId).prop("checked", true)
+            else $("#device-true"+compId).prop("checked", false);
             break;
           }
           case 4: {                                                              //DIGITAL_OUT
-            if(compDigitalState == true) $("#device-true"+compId).prop("checked", true)
+            if(compDigitalState) $("#device-true"+compId).prop("checked", true)
             else $("#device-false"+compId).prop("checked", true);
             break;
           }

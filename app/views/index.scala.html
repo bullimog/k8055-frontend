@@ -56,7 +56,7 @@
                     " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'up')\">></button>" +
                     "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'dup')\">>></button>")
                 }
-                case DIGITAL_IN => Html("<input type=\"checkbox\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">")
+                case DIGITAL_IN => Html("<input type=\"checkbox\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" >")
 
                 case DIGITAL_OUT => Html("<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">On "+
                            "<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-false"+device.id + "\" value=\"false\" onclick=\"makeCall('"+device.id+"', 'false')\" checked>Off ")
