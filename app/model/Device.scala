@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 case class Device(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
                   monitorSensor:Option[Device] = None, monitorIncreaser:Option[Device] = None,
                   monitorDecreaser:Option[Device] = None, digitalState:Option[Boolean] = None,
-                  analogueState:Option[Double] = None)
+                  analogueState:Option[Double] = None, analogueState2:Option[Double] = None)
 
 object Device {
 //  val TIMER = 0         // e.g. Clock
@@ -18,6 +18,7 @@ object Device {
   val DIGITAL_IN = 3    // e.g. Button or Switch
   val DIGITAL_OUT = 4   // e.g. Pump
   val MONITOR = 5       // e.g. Thermostat
+  val STROBE = 6        // e.g. pump pulser
 
   implicit val deviceReads: Reads[Device] = (
     (JsPath \ "id").read[String] and
@@ -29,7 +30,8 @@ object Device {
     (JsPath \ "monitorIncreaser").readNullable[Device] and
     (JsPath \ "monitorDecreaser").readNullable[Device] and
     (JsPath \ "digitalState").readNullable[Boolean] and
-    (JsPath \ "analogueState").readNullable[Double]
+    (JsPath \ "analogueState").readNullable[Double] and
+    (JsPath \ "analogueState2").readNullable[Double]
   )(Device.apply _)
 
   implicit val deviceWrites = Json.writes[Device]

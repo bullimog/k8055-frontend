@@ -24,9 +24,9 @@ trait StatusController  {
 
   def present = Action.async {
     implicit request => {
-      sequencerConnector.getSequence.flatMap{rs =>
-        k8055Connector.k8055State.map { dc =>
-          Ok(views.html.index(rs, dc))
+      sequencerConnector.getSequence.flatMap{readableSequence =>
+        k8055Connector.k8055State.map { deviceCollection =>
+          Ok(views.html.index(readableSequence, deviceCollection))
         }
       }
     }

@@ -16,6 +16,10 @@ trait Configuration {
   val doubleUp = "dup"
   val down = "down"
   val doubleDown = "ddown"
+  val up2 = "up2"
+  val doubleUp2 = "dup2"
+  val down2 = "down2"
+  val doubleDown2 = "ddown2"
   val isTrue = "true"
   val isFalse = "false"
 
