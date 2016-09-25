@@ -101,7 +101,7 @@
        var sensorState = ss.monitorStatuses[i].monitorSensor.digitalState
        var increaserState = ss.monitorStatuses[i].monitorIncreaser.digitalState
 
-       console.debug("monitor: " + sensorType)
+//       console.debug("monitor: " + sensorType)
     //    console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
             else $("#monitor-false"+monitorId).prop("checked", true);
@@ -113,8 +113,11 @@
          $("#monitor-increaser"+monitorId).text(increaserPower+" "+increaserUnit);
        }
        else{
-         $("#monitor-sensor"+monitorId).text(sensorState);
-         $("#monitor-increaser"+monitorId).text(increaserState);
+         if(sensorState) $("#monitor-sensor"+monitorId).prop("checked", true)
+         else $("#monitor-sensor"+monitorId).prop("checked", false);
+
+         if(increaserState) $("#monitor-increaser"+monitorId).prop("checked", true)
+         else $("#monitor-increaser"+monitorId).prop("checked", false);
        }
     }
   }

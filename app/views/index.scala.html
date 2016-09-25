@@ -22,14 +22,22 @@
             "<span id=\"monitor-temperature" + monitor.id + "\"> 0 &deg;c </span>" +
             " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'up')\">></button>" +
             "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'dup')\">>></button>")
+
+            <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
+                @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
+            </p>
+            <p><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
+                @Html("<span id=\"monitor-increaser" + monitor.id + "\"> 0 </span>")
+            </p>
         </p>
-        }
+        } else {
         <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
-            @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
+            @Html("<input type=\"checkbox\" name=\"monitor-sensor"+monitor.id+"\" id=\"monitor-sensor"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">")
         </p>
         <p><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
-            @Html("<span id=\"monitor-increaser" + monitor.id + "\"> 0 </span>")
+            @Html("<input type=\"checkbox\" name=\"monitor-increaser"+monitor.id+"\" id=\"monitor-increaser"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">")
         </p>
+        }
         </fieldset>
         }
     </fieldset>
