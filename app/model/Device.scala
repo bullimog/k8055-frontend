@@ -56,9 +56,10 @@ object Device {
     val unrounded:Double = raw * rawDevice.conversionFactor.getOrElse(1.0) + rawDevice.conversionOffset.getOrElse(0.0)
     val roundFactor:Double = math.pow(10.0, rawDevice.decimalPlaces.getOrElse(0).toDouble)
     val analogueState:Option[Double] = Some(math.round(unrounded*roundFactor)/roundFactor)
+    val analogueState2:Option[Double] = Some(rawDevice.analogueState2.getOrElse(0).toDouble)
 
     Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units,
-       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState)
+       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState, analogueState2)
   }
 }
 

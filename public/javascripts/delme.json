@@ -1,0 +1,206 @@
+{
+  "sequenceState": {
+    "running": false,
+    "currentStep": 0,
+    "timeRemaining": "0"
+  },
+  "deviceStatuses": [
+    {
+      "id": "AI-1",
+      "description": "Mash Thermometer",
+      "deviceType": 1,
+      "channel": 1,
+      "units": "°c",
+      "analogueState": 0
+    },
+    {
+      "id": "AI-2",
+      "description": "Boil Thermometer",
+      "deviceType": 1,
+      "channel": 2,
+      "units": "°c",
+      "analogueState": 0
+    },
+    {
+      "id": "DO-1",
+      "description": "Hopper",
+      "deviceType": 4,
+      "channel": 1,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-2",
+      "description": "Chiller",
+      "deviceType": 4,
+      "channel": 2,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-3",
+      "description": "Mash Valve",
+      "deviceType": 4,
+      "channel": 3,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-4",
+      "description": "Wort Pump",
+      "deviceType": 4,
+      "channel": 4,
+      "digitalState": true,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-5",
+      "description": "Boil Valve",
+      "deviceType": 4,
+      "channel": 5,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-6",
+      "description": "Boil Select",
+      "deviceType": 4,
+      "channel": 6,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-7",
+      "description": "Mash Pump",
+      "deviceType": 4,
+      "channel": 7,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DO-8",
+      "description": "Boil Pump",
+      "deviceType": 4,
+      "channel": 8,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "AO-1",
+      "description": "Mash Heater",
+      "deviceType": 2,
+      "channel": 1,
+      "units": "%",
+      "analogueState": 9.8
+    },
+    {
+      "id": "AO-2",
+      "description": "Boil Heater",
+      "deviceType": 2,
+      "channel": 2,
+      "units": "%",
+      "analogueState": 0.8
+    },
+    {
+      "id": "DI-1",
+      "description": "Mash Overflow",
+      "deviceType": 3,
+      "channel": 1,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DI-2",
+      "description": "Mash Underflow",
+      "deviceType": 3,
+      "channel": 2,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DI-3",
+      "description": "Wort Overflow",
+      "deviceType": 3,
+      "channel": 3,
+      "digitalState": false,
+      "analogueState": 0
+    },
+    {
+      "id": "DI-4",
+      "description": "Wort Underflow",
+      "deviceType": 3,
+      "channel": 4,
+      "digitalState": false,
+      "analogueState": 0
+    }
+  ],
+  "monitorStatuses": [
+    {
+      "id": "MO-1",
+      "description": "Thermostat",
+      "deviceType": 5,
+      "channel": 0,
+      "units": "°c",
+      "monitorSensor": {
+        "channel": 1,
+        "description": "Mash Thermometer",
+        "deviceType": 1,
+        "id": "AI-1",
+        "units": "°c",
+        "analogueState": 0
+      },
+      "monitorIncreaser": {
+        "channel": 1,
+        "description": "Mash Heater",
+        "deviceType": 2,
+        "id": "AO-1",
+        "units": "%",
+        "analogueState": 9.8
+      },
+      "digitalState": false,
+      "analogueState": 0.4
+    },
+    {
+      "id": "MO-2",
+      "description": "Overflow Monitor",
+      "deviceType": 5,
+      "channel": 0,
+      "monitorSensor": {
+        "channel": 1,
+        "description": "Mash Overflow",
+        "deviceType": 3,
+        "id": "DI-1",
+        "digitalState": false,
+        "analogueState": 0
+      },
+      "monitorIncreaser": {
+        "channel": 4,
+        "description": "Wort Pump",
+        "deviceType": 4,
+        "id": "DO-4",
+        "digitalState": true,
+        "analogueState": 0
+      },
+      "digitalState": true,
+      "analogueState": 0
+    }
+  ],
+  "strobeStatuses": [
+    {
+      "id": "ST-1",
+      "description": "Wort Pump Pulser",
+      "deviceType": 6,
+      "channel": 0,
+      "monitorIncreaser": {
+        "channel": 4,
+        "description": "Wort Pump",
+        "deviceType": 4,
+        "id": "DO-4",
+        "digitalState": true,
+        "analogueState": 0
+      },
+      "digitalState": false,
+      "analogueState": 30
+    }
+  ]
+}1sequencer.js: 182: 5

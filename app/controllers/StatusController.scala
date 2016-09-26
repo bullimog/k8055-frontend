@@ -35,11 +35,12 @@ trait StatusController  {
   def sequencerStatus() = Action.async { implicit request =>
     k8055Connector.k8055State.flatMap(dc => {
       val componentsAndMonitors = dc.devices.partition(device => device.deviceType != Device.MONITOR)
+      val componentsAndStrobes = componentsAndMonitors._1.partition(device => device.deviceType != Device.STROBE)
 
       sequencerConnector.getSequenceState.map { sequenceState =>
         //println(s"############# sequenceStatus: $componentsAndMonitors")
         //running, currentStep, componentStatuses, monitorStatuses
-        val appStatus = AppStatus(sequenceState, componentsAndMonitors._1, componentsAndMonitors._2)
+        val appStatus = AppStatus(sequenceState, componentsAndStrobes._1, componentsAndMonitors._2, componentsAndStrobes._2)
         Ok(Json.toJson(appStatus)).as(MimeTypes.TEXT)
       }
     })
