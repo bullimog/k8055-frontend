@@ -12,14 +12,24 @@ trait Configuration {
   val decrement = Play.current.configuration.getInt("decrement.single").fold(-1) (decrement => decrement)
   val big_decrement = Play.current.configuration.getInt("decrement.big").fold(-25) (decrement => decrement)
 
+  val onOffBig_increment = Play.current.configuration.getInt("increment.big").fold(10) (increment => increment)
+  val onOffBig_decrement = Play.current.configuration.getInt("decrement.big").fold(-10) (decrement => decrement)
+
   val up = "up"
   val doubleUp = "dup"
   val down = "down"
   val doubleDown = "ddown"
-  val up2 = "up2"
-  val doubleUp2 = "dup2"
-  val down2 = "down2"
-  val doubleDown2 = "ddown2"
+
+  val onUp = "onUp"
+  val onDoubleUp = "onDup"
+  val onDown = "onDown"
+  val onDoubleDown = "onDdown"
+
+  val offUp = "offUp"
+  val offDoubleUp = "offDup"
+  val offDown = "offDown"
+  val offDoubleDown = "offDdown"
+
   val isTrue = "true"
   val isFalse = "false"
 

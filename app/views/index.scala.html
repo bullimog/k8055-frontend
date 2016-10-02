@@ -1,5 +1,6 @@
 
 @import model.Device._
+@import connectors.Configuration._
 @(sequence: model.ReadableSequence, deviceCollection: model.DeviceCollection)
 
 @main("K8055 Title") {
@@ -17,11 +18,11 @@
         </p>
         @if(monitor.monitorSensor.get.deviceType == model.Device.ANALOGUE_IN) {
         <p><label>Target:</label>
-            @Html("<button id=\"device-down\"+monitor.id class=\"button\" onclick=\"makeCall('"+monitor.id+"', 'ddown')\"><<</button>" +
-            "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'down')\"><</button> " +
+            @Html("<button id=\"device-down\"+monitor.id class=\"button\" onclick=\"makeCall('"+monitor.id+"', '"+doubleDown+"')\"><<</button>" +
+            "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+down+"')\"><</button> " +
             "<span id=\"monitor-temperature" + monitor.id + "\"> 0 &deg;c </span>" +
-            " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'up')\">></button>" +
-            "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', 'dup')\">>></button>")
+            " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+up+"')\">></button>" +
+            "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+doubleUp+"')\">>></button>")
 
             <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
                 @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
@@ -52,18 +53,18 @@
                 "<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-false"+strobe.id + "\" value=\"false\" onclick=\"makeCall('"+strobe.id+"', 'false')\" checked>Off ")
             </p>
             <p><label>On Duration:</label>
-                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', 'ddown')\"><<</button>" +
-                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'down')\"><</button> " +
+                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', '"+onDoubleDown+"')\"><<</button>" +
+                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onDown+"')\"><</button> " +
                 "<span id=\"strobe-on" + strobe.id + "\"> 0 seconds </span>" +
-                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'up')\">></button>" +
-                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'dup')\">>></button>")
+                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onUp+"')\">></button>" +
+                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onDoubleUp+"')\">>></button>")
             </p>
             <p><label>Off Duration:</label>
-                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', 'ddown2')\"><<</button>" +
-                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'down2')\"><</button> " +
+                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', '"+offDoubleDown+"')\"><<</button>" +
+                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offDown+"')\"><</button> " +
                 "<span id=\"strobe-off" + strobe.id + "\"> 0 seconds</span>" +
-                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'up2')\">></button>" +
-                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', 'dup2')\">>></button>")
+                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offUp+"')\">></button>" +
+                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offDoubleUp+"')\">>></button>")
             </p>
             <p><label>@strobe.monitorIncreaser.fold("None")(si => si.description):</label>
                 @Html("<input type=\"checkbox\" name=\"strobe-increaser"+strobe.id+"\" id=\"strobe-increaser"+strobe.id + "\" value=\"true\" >")

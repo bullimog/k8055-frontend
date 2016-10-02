@@ -126,18 +126,18 @@
       for(i=0; i<ss.strobeStatuses.length; i++){
          var strobeId = ss.strobeStatuses[i].id
          var strobeEnabled = ss.strobeStatuses[i].digitalState
-         var strobeAnalogueState = ss.strobeStatuses[i].analogueState
-         var strobeAnalogueState2 = ss.strobeStatuses[i].analogueState2
+         var strobeOnTime = ss.strobeStatuses[i].strobeOnTime
+         var strobeOffTime = ss.strobeStatuses[i].strobeOffTime
          var increaserState = ss.strobeStatuses[i].monitorIncreaser.digitalState
 
 //         console.debug("strobe: " + strobeEnabled)
 
-//          console.debug("strobe: "+ strobeId + " - "  + strobeEnabled +" - " + strobeAnalogueState +" - "+ strobeAnalogueState2 + " - " + increaserState);
+//         console.debug("strobe: "+ strobeId + " - "  + strobeEnabled +" - " + strobeOnTime +" - "+ strobeOffTime + " - " + increaserState);
          if(strobeEnabled) $("#strobe-true"+strobeId).prop("checked", true)
               else $("#strobe-false"+strobeId).prop("checked", true);
 
-         $("#strobe-on"+strobeId).text(strobeAnalogueState+" seconds");
-         $("#strobe-off"+strobeId).text(strobeAnalogueState2+" seconds");
+         $("#strobe-on"+strobeId).text(strobeOnTime+" seconds");
+         $("#strobe-off"+strobeId).text(strobeOffTime+" seconds");
 
 
          if(increaserState) $("#strobe-increaser"+strobeId).prop("checked", true)

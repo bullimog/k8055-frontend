@@ -8,7 +8,8 @@ case class RawDevice(id: String, description: String, deviceType: Int, channel:I
                   conversionFactor:Option[Double] = None, conversionOffset:Option[Double] = None,
                   decimalPlaces:Option[Int] = None, monitorSensor:Option[String] = None,
                   monitorIncreaser:Option[String] = None, monitorDecreaser:Option[String] = None,
-                  digitalState:Option[Boolean] = None, analogueState:Option[Int] = None, analogueState2:Option[Int])
+                  digitalState:Option[Boolean] = None, analogueState:Option[Int] = None, strobeOnTime:Option[Int],
+                  strobeOffTime:Option[Int])
 
 
 object RawDevice {
@@ -27,7 +28,8 @@ object RawDevice {
     (JsPath \ "monitorDecreaser").readNullable[String] and
     (JsPath \ "digitalState").readNullable[Boolean] and
     (JsPath \ "analogueState").readNullable[Int] and
-    (JsPath \ "analogueState2").readNullable[Int]
+    (JsPath \ "strobeOnTime").readNullable[Int] and
+    (JsPath \ "strobeOffTime").readNullable[Int]
   )(RawDevice.apply _)
 
   implicit val rawDeviceWrites = Json.writes[RawDevice]

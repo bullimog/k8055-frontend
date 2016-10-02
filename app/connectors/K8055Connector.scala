@@ -84,10 +84,17 @@ trait K8055Connector {
       case Configuration.doubleUp    => DeviceState(deviceId, None, Some(Configuration.big_increment))
       case Configuration.down        => DeviceState(deviceId, None, Some(Configuration.decrement))
       case Configuration.doubleDown  => DeviceState(deviceId, None, Some(Configuration.big_decrement))
-      case Configuration.up2         => DeviceState(deviceId, None, None, Some(Configuration.increment))
-      case Configuration.doubleUp2   => DeviceState(deviceId, None, None, Some(Configuration.big_increment))
-      case Configuration.down2       => DeviceState(deviceId, None, None, Some(Configuration.decrement))
-      case Configuration.doubleDown2 => DeviceState(deviceId, None, None, Some(Configuration.big_decrement))
+
+      case Configuration.onUp         => DeviceState(deviceId, None, None, Some(Configuration.increment))
+      case Configuration.onDoubleUp   => DeviceState(deviceId, None, None, Some(Configuration.onOffBig_increment))
+      case Configuration.onDown       => DeviceState(deviceId, None, None, Some(Configuration.decrement))
+      case Configuration.onDoubleDown => DeviceState(deviceId, None, None, Some(Configuration.onOffBig_decrement))
+
+      case Configuration.offUp         => DeviceState(deviceId, None, None, None, Some(Configuration.increment))
+      case Configuration.offDoubleUp   => DeviceState(deviceId, None, None, None, Some(Configuration.onOffBig_increment))
+      case Configuration.offDown       => DeviceState(deviceId, None, None, None, Some(Configuration.decrement))
+      case Configuration.offDoubleDown => DeviceState(deviceId, None, None, None, Some(Configuration.onOffBig_decrement))
+
       case Configuration.isTrue      => DeviceState(deviceId, Some(true), None)
       case Configuration.isFalse     => DeviceState(deviceId, Some(false), None)
       case _                         => DeviceState("", None, None)

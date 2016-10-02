@@ -9,7 +9,8 @@ import scala.annotation.tailrec
 case class Device(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
                   monitorSensor:Option[Device] = None, monitorIncreaser:Option[Device] = None,
                   monitorDecreaser:Option[Device] = None, digitalState:Option[Boolean] = None,
-                  analogueState:Option[Double] = None, analogueState2:Option[Double] = None)
+                  analogueState:Option[Double] = None, strobeOnTime:Option[Double] = None,
+                  strobeOffTime:Option[Double] = None)
 
 object Device {
 //  val TIMER = 0         // e.g. Clock
@@ -31,7 +32,8 @@ object Device {
     (JsPath \ "monitorDecreaser").readNullable[Device] and
     (JsPath \ "digitalState").readNullable[Boolean] and
     (JsPath \ "analogueState").readNullable[Double] and
-    (JsPath \ "analogueState2").readNullable[Double]
+    (JsPath \ "strobeOnTime").readNullable[Double] and
+    (JsPath \ "strobeOffTime").readNullable[Double]
   )(Device.apply _)
 
   implicit val deviceWrites = Json.writes[Device]
@@ -56,10 +58,12 @@ object Device {
     val unrounded:Double = raw * rawDevice.conversionFactor.getOrElse(1.0) + rawDevice.conversionOffset.getOrElse(0.0)
     val roundFactor:Double = math.pow(10.0, rawDevice.decimalPlaces.getOrElse(0).toDouble)
     val analogueState:Option[Double] = Some(math.round(unrounded*roundFactor)/roundFactor)
-    val analogueState2:Option[Double] = Some(rawDevice.analogueState2.getOrElse(0).toDouble)
+    val strobeOnTime:Option[Double] = Some(rawDevice.strobeOnTime.getOrElse(0).toDouble)
+    val strobeOffTime:Option[Double] = Some(rawDevice.strobeOffTime.getOrElse(0).toDouble)
 
     Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units,
-       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState, analogueState2)
+       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState,
+       strobeOnTime, strobeOffTime)
   }
 }
 
