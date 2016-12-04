@@ -9,7 +9,8 @@ import scala.annotation.tailrec
 case class Device(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
                   monitorSensor:Option[Device] = None, monitorIncreaser:Option[Device] = None,
                   monitorDecreaser:Option[Device] = None, digitalState:Option[Boolean] = None,
-                  analogueState:Option[Double] = None)
+                  analogueState:Option[Double] = None, strobeOnTime:Option[Double] = None,
+                  strobeOffTime:Option[Double] = None)
 
 object Device {
 //  val TIMER = 0         // e.g. Clock
@@ -18,6 +19,7 @@ object Device {
   val DIGITAL_IN = 3    // e.g. Button or Switch
   val DIGITAL_OUT = 4   // e.g. Pump
   val MONITOR = 5       // e.g. Thermostat
+  val STROBE = 6        // e.g. pump pulser
 
   implicit val deviceReads: Reads[Device] = (
     (JsPath \ "id").read[String] and
@@ -29,7 +31,9 @@ object Device {
     (JsPath \ "monitorIncreaser").readNullable[Device] and
     (JsPath \ "monitorDecreaser").readNullable[Device] and
     (JsPath \ "digitalState").readNullable[Boolean] and
-    (JsPath \ "analogueState").readNullable[Double]
+    (JsPath \ "analogueState").readNullable[Double] and
+    (JsPath \ "strobeOnTime").readNullable[Double] and
+    (JsPath \ "strobeOffTime").readNullable[Double]
   )(Device.apply _)
 
   implicit val deviceWrites = Json.writes[Device]
@@ -54,9 +58,12 @@ object Device {
     val unrounded:Double = raw * rawDevice.conversionFactor.getOrElse(1.0) + rawDevice.conversionOffset.getOrElse(0.0)
     val roundFactor:Double = math.pow(10.0, rawDevice.decimalPlaces.getOrElse(0).toDouble)
     val analogueState:Option[Double] = Some(math.round(unrounded*roundFactor)/roundFactor)
+    val strobeOnTime:Option[Double] = Some(rawDevice.strobeOnTime.getOrElse(0).toDouble)
+    val strobeOffTime:Option[Double] = Some(rawDevice.strobeOffTime.getOrElse(0).toDouble)
 
     Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.units,
-       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState)
+       monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState,
+       strobeOnTime, strobeOffTime)
   }
 }
 

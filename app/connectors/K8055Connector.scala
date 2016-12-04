@@ -80,13 +80,24 @@ trait K8055Connector {
 
   def setK8055State(deviceId: String, state: String):Future[Boolean]  = {
     val deviceState:DeviceState = state match {
-      case Configuration.up         => DeviceState(deviceId, None, Some(Configuration.increment))
-      case Configuration.doubleUp   => DeviceState(deviceId, None, Some(Configuration.big_increment))
-      case Configuration.down       => DeviceState(deviceId, None, Some(Configuration.decrement))
-      case Configuration.doubleDown => DeviceState(deviceId, None, Some(Configuration.big_decrement))
-      case Configuration.isTrue     => DeviceState(deviceId, Some(true), None)
-      case Configuration.isFalse    => DeviceState(deviceId, Some(false), None)
-      case _                        => DeviceState("", None, None)
+      case Configuration.up          => DeviceState(deviceId, None, Some(Configuration.increment))
+      case Configuration.doubleUp    => DeviceState(deviceId, None, Some(Configuration.big_increment))
+      case Configuration.down        => DeviceState(deviceId, None, Some(Configuration.decrement))
+      case Configuration.doubleDown  => DeviceState(deviceId, None, Some(Configuration.big_decrement))
+
+      case Configuration.onUp         => DeviceState(deviceId, None, None, Some(Configuration.increment))
+      case Configuration.onDoubleUp   => DeviceState(deviceId, None, None, Some(Configuration.onOffBig_increment))
+      case Configuration.onDown       => DeviceState(deviceId, None, None, Some(Configuration.decrement))
+      case Configuration.onDoubleDown => DeviceState(deviceId, None, None, Some(Configuration.onOffBig_decrement))
+
+      case Configuration.offUp         => DeviceState(deviceId, None, None, None, Some(Configuration.increment))
+      case Configuration.offDoubleUp   => DeviceState(deviceId, None, None, None, Some(Configuration.onOffBig_increment))
+      case Configuration.offDown       => DeviceState(deviceId, None, None, None, Some(Configuration.decrement))
+      case Configuration.offDoubleDown => DeviceState(deviceId, None, None, None, Some(Configuration.onOffBig_decrement))
+
+      case Configuration.isTrue      => DeviceState(deviceId, Some(true), None)
+      case Configuration.isFalse     => DeviceState(deviceId, Some(false), None)
+      case _                         => DeviceState("", None, None)
     }
 
     doPut(k8055Host + k8055DeviceStateDelta, deviceState).fold(Future(false)) {
