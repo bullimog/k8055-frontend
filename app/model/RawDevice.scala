@@ -8,8 +8,8 @@ case class RawDevice(id: String, description: String, deviceType: Int, channel:I
                   conversionFactor:Option[Double] = None, conversionOffset:Option[Double] = None,
                   decimalPlaces:Option[Int] = None, monitorSensor:Option[String] = None,
                   monitorIncreaser:Option[String] = None, monitorDecreaser:Option[String] = None,
-                  digitalState:Option[Boolean] = None, analogueState:Option[Int] = None, strobeOnTime:Option[Int],
-                  strobeOffTime:Option[Int])
+                  digitalState:Option[Boolean] = None, analogueState:Option[Int] = None,
+                  strobeOnTime:Option[Int] = None, strobeOffTime:Option[Int] = None)
 
 
 object RawDevice {
