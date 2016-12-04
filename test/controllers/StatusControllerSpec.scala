@@ -16,7 +16,7 @@ object StatusControllerSpec extends PlaySpecification with Results {
 
   val controller = new TestController
   "The Status Controller" should {
-    "render the status page from the present method" in {
+    "render the status page from the present method" in new WithApplication{
 
       val result: Future[Result] = controller.present().apply(FakeRequest())
       contentType(result) must equalTo(Some("text/html"))
@@ -24,7 +24,7 @@ object StatusControllerSpec extends PlaySpecification with Results {
       bodyText must contain("My Fake Device Collection")
     }
 
-    "provide a list of list of component statuses" in {
+    "provide a list of list of component statuses" in new WithApplication{
       val result: Future[Result] = controller.sequencerStatus().apply(FakeRequest())
       contentType(result) must equalTo(Some("text/plain"))
       val bodyText: String = contentAsString(result)
