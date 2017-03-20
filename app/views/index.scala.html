@@ -6,7 +6,7 @@
 @main("K8055 Title") {
 <h1>@deviceCollection.name</h1>
 <h3>@deviceCollection.description</h3>
-<div style="width:500px;" xmlns="http://www.w3.org/1999/html">
+<div style="width:400px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Monitors</legend>
         @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
@@ -72,7 +72,8 @@
         </fieldset>
         }
     </fieldset>
-
+    </div>
+    <div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Devices</legend>
     @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) && (d.deviceType != model.Device.STROBE)).map {device =>
@@ -108,28 +109,33 @@
             <span id="clock-val"> 00:00:00 </span>
         </p>
     </fieldset>
+</div>
 
+<div style="width:400px; float: left"  xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Program</legend>
-        <table class="program">
-            <tr><th>#</th><th>Device</th><th>Action</th></tr>
-            @sequence.readableSteps.map {step =>
-            <tr id="step@step.id">
-                <td>@step.id</td>
-                <td id="stepDevice@step.id">@step.deviceDescription</td>
-                <td id="stepDesc@step.id">@step.description @step.value</td>
-            </tr>
-            }
-        </table>
-    </fieldset>
-
-    <p class="form-field">
+        <p class="form-field">
         <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
         <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Stop</button>
         <button id="resetButton" onclick="resetSequencer()" class="button" value="Next">Reset</button>
         <button id="nextButton" onclick="nextStep()" class="button" value="Next">Next</button>
         <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
-    </p>
+        </p>
 
+
+        <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
+
+            <table class="program">
+                <tr><th>#</th><th>Device</th><th>Action</th></tr>
+                @sequence.readableSteps.map {step =>
+                <tr id="step@step.id">
+                <td>@step.id</td>
+                <td id="stepDevice@step.id">@step.deviceDescription</td>
+                <td id="stepDesc@step.id">@step.description @step.value</td>
+                </tr>
+            }
+            </table>
+        </div>
+    </fieldset>
 </div>
 }
