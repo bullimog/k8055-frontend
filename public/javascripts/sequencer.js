@@ -16,11 +16,13 @@
       $("#step"+current).removeClass("ran");
 
       for(var i=current+1; i<steps.length; i++){
-         $("#"+steps[i].id).addClass("to-run");
+
+        if(steps[i].id != "step-description"+i){
+           $("#"+steps[i].id).addClass("to-run");
+         }
          $("#"+steps[i].id).removeClass("running");
          $("#"+steps[i].id).removeClass("ran");
       }
- //   }
   }
 
   function highlightStartStopButtons(running){

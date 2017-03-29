@@ -125,14 +125,21 @@
 
         <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
 
-            <table class="program">
+            <table class="program" border="1">
                 <tr><th>#</th><th>Device</th><th>Action</th></tr>
                 @sequence.readableSteps.map {step =>
-                <tr id="step@step.id">
-                <td>@step.id</td>
-                <td id="stepDevice@step.id">@step.deviceDescription</td>
-                <td id="stepDesc@step.id">@step.description @step.value</td>
-                </tr>
+                @if(step.stepDescription.isDefined){
+                    <tr id="step-description@step.id">
+                    <td>@step.id</td>
+                    <td colspan="2" id="stepDevice@step.id">@step.stepDescription</td>
+                    </tr>
+                }else{
+                    <tr id="step@step.id">
+                    <td>@step.id</td>
+                    <td id="stepDevice@step.id">@step.deviceDescription</td>
+                    <td id="stepDesc@step.id">@step.description @step.value</td>
+                    </tr>
+                }
             }
             </table>
         </div>
