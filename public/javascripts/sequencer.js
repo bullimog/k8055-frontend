@@ -17,7 +17,10 @@
 
       for(var i=current+1; i<steps.length; i++){
 
-        if(steps[i].id != "step-description"+i){
+        if(steps[i].id == "step-description"+i){
+           $("#"+steps[i].id).addClass("comment");
+         }
+         else{
            $("#"+steps[i].id).addClass("to-run");
          }
          $("#"+steps[i].id).removeClass("running");

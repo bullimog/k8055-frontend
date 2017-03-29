@@ -4,8 +4,7 @@
 @(sequence: model.ReadableSequence, deviceCollection: model.DeviceCollection)
 
 @main("K8055 Title") {
-<h1>@deviceCollection.name</h1>
-<h3>@deviceCollection.description</h3>
+<h2>@deviceCollection.name : @deviceCollection.description</h2>
 <div style="width:400px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Monitors</legend>
