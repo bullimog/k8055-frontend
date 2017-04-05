@@ -75,22 +75,14 @@
     <div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Devices</legend>
+
     @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) && (d.deviceType != model.Device.STROBE)).map {device =>
         <p id="device@device.id">
-            <label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
             @{device.deviceType match {
-                case ANALOGUE_IN => Html("<span id=\"device-val"+device.id + "\"> 0 "+ device.units.getOrElse("")+ "</span>")
-                case ANALOGUE_OUT => {
-                    Html("<button id=\"device-down\"+device.id class=\"button\" onclick=\"makeCall('"+device.id+"', 'ddown')\"><<</button>" +
-                    "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'down')\"><</button> " +
-                    "<span id=\"device-val" + device.id + "\"> 00.0 "+ device.units.getOrElse("")+ "</span>" +
-                    " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'up')\">></button>" +
-                    "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+device.id+"', 'dup')\">>></button>")
-                }
-                case DIGITAL_IN => Html("<input type=\"checkbox\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" >")
-
-                case DIGITAL_OUT => Html("<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-true"+device.id + "\" value=\"true\" onclick=\"makeCall('"+device.id+"', 'true')\">On "+
-                           "<input type=\"radio\" name=\"device-name"+device.id+"\" id=\"device-false"+device.id + "\" value=\"false\" onclick=\"makeCall('"+device.id+"', 'false')\" checked>Off ")
+                case ANALOGUE_IN => analogue_in(device)
+                case ANALOGUE_OUT => analogue_out(device)
+                case DIGITAL_IN => digital_in(device)
+                case DIGITAL_OUT => digital_out(device)
                 case _ => Html("<b>Bad Device</b>")
             }}
         </p>

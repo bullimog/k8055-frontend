@@ -1,0 +1,14 @@
+@import model.Device
+@(device: Device)
+
+<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<input type="checkbox" name="device-name@device.id" id="device-true@device.id" value="true">
+
+
+<!--
+<div class="checkboxFour">
+    <input type="checkbox" value="true" id="device-true@device.id" name="device-name@device.id" />
+    <label for="device-true@device.id"></label>
+</div>
+
+-->

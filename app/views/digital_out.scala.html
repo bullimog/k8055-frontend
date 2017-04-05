@@ -1,0 +1,19 @@
+@import model.Device
+@(device: Device)
+
+<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<input type="radio"
+       name="device-name@device.id"
+       id="device-true@device.id"
+       value="true"
+       onclick="makeCall('@device.id', 'true')">
+       On
+
+<input type="radio"
+       name="device-name@device.id"
+       id="device-false@device.id"
+       value="false"
+       onclick="makeCall('@device.id', 'false')" checked>
+       Off
+
+

@@ -1,0 +1,32 @@
+@import model.Device
+@(device: Device)
+<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<button id="device-down@device.id"
+        class="button"
+        onclick="makeCall('@device.id', 'ddown')">
+<<
+</button>
+
+<button id="-"
+        class="button"
+        value="Next"
+        onclick="makeCall('@device.id', 'down')">
+<
+</button>
+
+<span id="device-val@device.id"> 00.0 @device.units.getOrElse("")</span>
+
+<button id="+"
+        class="button"
+        value="Next"
+        onclick="makeCall('@device.id', 'up')">
+>
+</button>
+
+<button id="++"
+        class="button"
+        value="Next"
+        onclick="makeCall('@device.id', 'dup')">
+>>
+</button>
+
