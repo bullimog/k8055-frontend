@@ -11,10 +11,11 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
 .ai-device-label{color: black; text-align: left; width: 210px;}
-.ao-device-label{color: black; text-align: left; width: 180px;}
+.ao-device-label{color: black; text-align: left; width: 150px;}
 .di-device-label{color: black; text-align: left; width: 180px;}
 .do-device-label{color: black; text-align: left; width: 210px;}
 .d-increaser-label{color: black; text-align: left; width: 100px;}
+.d-sensor-label{color: black; text-align: left; width: 140px;}
 
 .btn-disable
         {
@@ -35,7 +36,7 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 
 
 
-input[type=checkboxx] {
+input[type=checkbox] {
 	visibility: hidden;
 }
 

@@ -6,129 +6,117 @@
 @main("K8055 Title") {
 <h2>@deviceCollection.name : @deviceCollection.description</h2>
 <div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
-    <fieldset>
-        <legend>Monitors</legend>
-        @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
-        <fieldset>
-            <legend>@monitor.description</legend>
-            <div style="display:table"> <label>Enabled:</label>
-            @Html("<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-true"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">On "+
-                  "<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-false"+monitor.id + "\" value=\"false\" onclick=\"makeCall('"+monitor.id+"', 'false')\" checked>Off ")
-            </div>
+  <fieldset>
+    <legend>Monitors</legend>
+    @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
+      <fieldset>
+        <legend>@monitor.description</legend>
+        <div style="display:table">
+          <label>Enabled:</label>
+          @Html("<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-true"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">On "+
+                "<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-false"+monitor.id + "\" value=\"false\" onclick=\"makeCall('"+monitor.id+"', 'false')\" checked>Off ")
+        </div>
         @if(monitor.monitorSensor.get.deviceType == model.Device.ANALOGUE_IN) {
-        <label>Target:</label>
-            @Html("<button id=\"device-down\"+monitor.id class=\"button\" onclick=\"makeCall('"+monitor.id+"', '"+doubleDown+"')\"><<</button>" +
-            "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+down+"')\"><</button> " +
-            "<span id=\"monitor-temperature" + monitor.id + "\"> 0 &deg;c </span>" +
-            " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+up+"')\">></button>" +
-            "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+doubleUp+"')\">>></button>")
-
-            <div><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
-                @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
-            </div>
-            <div><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
-                @Html("<span id=\"monitor-increaser" + monitor.id + "\"> 0 </span>")
-            </div>
+          <div style="display:table">
+            @analogue_out(monitor, "Target:", "monitor-temperature")
+          </div>
         } else {
-        <div><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
-            @Html("<input type=\"checkbox\" name=\"monitor-sensor"+monitor.id+"\" id=\"monitor-sensor"+monitor.id + "\" value=\"true\" >")
-        </div>
-        <div><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
-            @Html("<input type=\"checkbox\" name=\"monitor-increaser"+monitor.id+"\" id=\"monitor-increaser"+monitor.id + "\" value=\"true\" >")
-        </div>
-        }
-        </fieldset>
-        }
-    </fieldset>
+          <div style="display:table">
+            @digital_sensor(monitor)
+          </div>
 
-    <fieldset>
-        <legend>Strobes</legend>
-        @deviceCollection.devices.filter(d=>d.deviceType == model.Device.STROBE).map {strobe =>
-        <fieldset>
-            <legend>@strobe.description</legend>
-            <div style="display:table"> <label>Enabled:</label>
-                @Html("<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-true"+strobe.id + "\" value=\"true\" onclick=\"makeCall('"+strobe.id+"', 'true')\">On "+
+          <div style="display:table">
+            @digital_increaser(monitor, "monitor-increaser")
+          </div>
+        }
+      </fieldset>
+    }
+  </fieldset>
+
+  <fieldset>
+    <legend>Strobes</legend>
+    @deviceCollection.devices.filter(d=>d.deviceType == model.Device.STROBE).map {strobe =>
+      <fieldset>
+        <legend>@strobe.description</legend>
+        <div style="display:table">
+          <label>Enabled:</label>
+          @Html("<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-true"+strobe.id + "\" value=\"true\" onclick=\"makeCall('"+strobe.id+"', 'true')\">On "+
                 "<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-false"+strobe.id + "\" value=\"false\" onclick=\"makeCall('"+strobe.id+"', 'false')\" checked>Off ")
-            </div>
-            <div style="display:table">
-                @strobe_duration(strobe, "On Duration:", onDoubleDown, onDown, onUp, onDoubleUp, "strobe-on")
-            </div>
-            <div style="display:table">
-                @strobe_duration(strobe, "Off Duration:", offDoubleDown, offDown, offUp, offDoubleUp, "strobe-off")
-            </div>
-            <div style="display:table">
-                @digital_increaser(strobe, "strobe-increaser")
-            </div>
-        </fieldset>
-        }
-    </fieldset>
+        </div>
+        <div style="display:table">
+          @strobe_duration(strobe, "On Duration:", onDoubleDown, onDown, onUp, onDoubleUp, "strobe-on")
+        </div>
+        <div style="display:table">
+          @strobe_duration(strobe, "Off Duration:", offDoubleDown, offDown, offUp, offDoubleUp, "strobe-off")
+        </div>
+        <div style="display:table">
+          @digital_increaser(strobe, "strobe-increaser")
+        </div>
+      </fieldset>
+    }
+  </fieldset>
+</div>
+
+
+<div style="width:460px; float: left" xmlns="http://www.w3.org/1999/html">
+  <fieldset>
+    <legend>Devices</legend>
+
+    @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) &&
+                                        (d.deviceType != model.Device.STROBE)).map {device =>
+      <div id="device@device.id" style="display:table">
+        @{device.deviceType match {
+          case ANALOGUE_IN => analogue_in(device)
+          case ANALOGUE_OUT => analogue_out(device, device.id +": "+device.deviceType+": "+device.description+":", "device-val")
+          case DIGITAL_IN => digital_in(device)
+          case DIGITAL_OUT => digital_out(device)
+          case _ => Html("<b>Bad Device</b>")
+        }}
+      </div>
+    }
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Clock</legend>
+    <div id="clock">
+      <label id="clock-desc">Time Remaining:&nbsp;</label>
+      <span id="clock-val"> 00:00:00 </span>
     </div>
-
-
-    <div style="width:460px; float: left" xmlns="http://www.w3.org/1999/html">
-    <fieldset>
-        <legend>Devices</legend>
-
-    @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) && (d.deviceType != model.Device.STROBE)).map {device =>
-        <div id="device@device.id" style="display:table">
-            @{device.deviceType match {
-                case ANALOGUE_IN => analogue_in(device)
-                case ANALOGUE_OUT => analogue_out(device)
-                case DIGITAL_IN => digital_in(device)
-                case DIGITAL_OUT => digital_out(device)
-                case _ => Html("<b>Bad Device</b>")
-            }}
-        </div>
-        }
-    </fieldset>
-
-
-
-    <!--
-    <img src="assets/images/switch_off.png" width="50">
-    <img src="assets/images/switch_on.png" width="50">
-    -->
-    <fieldset>
-        <legend>Clock</legend>
-        <div id="clock">
-            <label id="clock-desc">Time Remaining:&nbsp;</label>
-            <span id="clock-val"> 00:00:00 </span>
-        </div>
-    </fieldset>
+  </fieldset>
 </div>
 
 <div style="width:400px; float: left"  xmlns="http://www.w3.org/1999/html">
-    <fieldset>
-        <legend>Program</legend>
-        <div class="form-field">
-        <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
-        <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Stop</button>
-        <button id="resetButton" onclick="resetSequencer()" class="button" value="Next">Reset</button>
-        <button id="nextButton" onclick="nextStep()" class="button" value="Next">Next</button>
-        <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
-        </div>
+  <fieldset>
+    <legend>Program</legend>
+    <div class="form-field">
+      <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
+      <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Stop</button>
+      <button id="resetButton" onclick="resetSequencer()" class="button" value="Next">Reset</button>
+      <button id="nextButton" onclick="nextStep()" class="button" value="Next">Next</button>
+      <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
+    </div>
 
+    <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
 
-        <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
-
-            <table class="program" border="1">
-                <tr><th>#</th><th>Device</th><th>Action</th></tr>
-                @sequence.readableSteps.map {step =>
-                @if(step.stepDescription.isDefined){
-                    <tr id="step-description@step.id">
-                    <td>@step.id</td>
-                    <td colspan="2" id="stepDevice@step.id">@step.stepDescription</td>
-                    </tr>
-                }else{
-                    <tr id="step@step.id">
-                    <td>@step.id</td>
-                    <td id="stepDevice@step.id">@step.deviceDescription</td>
-                    <td id="stepDesc@step.id">@step.description @step.value</td>
-                    </tr>
-                }
-            }
-            </table>
-        </div>
-    </fieldset>
+      <table class="program" border="1">
+        <tr><th>#</th><th>Device</th><th>Action</th></tr>
+        @sequence.readableSteps.map {step =>
+          @if(step.stepDescription.isDefined){
+            <tr id="step-description@step.id">
+              <td>@step.id</td>
+              <td colspan="2" id="stepDevice@step.id">@step.stepDescription</td>
+            </tr>
+          }else{
+            <tr id="step@step.id">
+              <td>@step.id</td>
+              <td id="stepDevice@step.id">@step.deviceDescription</td>
+              <td id="stepDesc@step.id">@step.description @step.value</td>
+            </tr>
+          }
+        }
+      </table>
+    </div>
+  </fieldset>
 </div>
 }

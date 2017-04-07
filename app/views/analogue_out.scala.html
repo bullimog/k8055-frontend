@@ -1,32 +1,33 @@
+@import connectors.Configuration._
 @import model.Device
-@(device: Device)
-<label class="ao-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+@(device: Device, label: String, outputId: String)
+<label class="ao-device-label" id="deviceDesc@device.id">@label</label>
 <button id="device-down@device.id"
         class="button"
-        onclick="makeCall('@device.id', 'ddown')">
+        onclick="makeCall('@device.id', '@doubleDown')">
 <<
 </button>
 
 <button id="-"
         class="button"
         value="Next"
-        onclick="makeCall('@device.id', 'down')">
+        onclick="makeCall('@device.id', '@down')">
 <
 </button>
 
-<span id="device-val@device.id"> 00.0 @device.units.getOrElse("")</span>
+<span id="@outputId@device.id"> 00.0 @device.units.getOrElse("")</span>
 
 <button id="+"
         class="button"
         value="Next"
-        onclick="makeCall('@device.id', 'up')">
+        onclick="makeCall('@device.id', '@up')">
 >
 </button>
 
 <button id="++"
         class="button"
         value="Next"
-        onclick="makeCall('@device.id', 'dup')">
+        onclick="makeCall('@device.id', '@doubleUp')">
 >>
 </button>
 
