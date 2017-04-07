@@ -10,6 +10,11 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
+.ai-device-label{color: black; text-align: left; width: 210px;}
+.ao-device-label{color: black; text-align: left; width: 180px;}
+.di-device-label{color: black; text-align: left; width: 180px;}
+.do-device-label{color: black; text-align: left; width: 210px;}
+.d-increaser-label{color: black; text-align: left; width: 100px;}
 
 .btn-disable
         {
@@ -27,3 +32,41 @@ div   {font-family:Arial,"libra sans",sans-serif; }
         color: #000000;
         background-color: #c0c0c0;
         }
+
+
+
+input[type=checkboxx] {
+	visibility: hidden;
+}
+
+.digital-in {
+	width: 25px;
+	height: 25px;
+	background: #ddd;
+	margin: 10px 10px;
+
+	border-radius: 100%;
+	position: relative;
+	box-shadow: 0px 1px 3px rgba(0,0,0,1.5);
+}
+
+.digital-in label {
+	display: block;
+	width: 15px;
+	height: 15px;
+	border-radius: 100px;
+
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 1;
+
+	background: #333;
+	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.digital-in input[type=checkbox]:checked + label {
+	background: #26ca28;
+}

@@ -1,6 +1,6 @@
 @import model.Device
 @(device: Device)
 
-<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<label class="ai-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
 <span id="device-val@device.id"> 00.0 @device.units.getOrElse("")</span>
 

@@ -5,38 +5,37 @@
 
 @main("K8055 Title") {
 <h2>@deviceCollection.name : @deviceCollection.description</h2>
-<div style="width:400px; float: left" xmlns="http://www.w3.org/1999/html">
+<div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Monitors</legend>
         @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
         <fieldset>
             <legend>@monitor.description</legend>
-        <p> <label>Enabled:</label>
+            <div style="display:table"> <label>Enabled:</label>
             @Html("<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-true"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">On "+
                   "<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-false"+monitor.id + "\" value=\"false\" onclick=\"makeCall('"+monitor.id+"', 'false')\" checked>Off ")
-        </p>
+            </div>
         @if(monitor.monitorSensor.get.deviceType == model.Device.ANALOGUE_IN) {
-        <p><label>Target:</label>
+        <label>Target:</label>
             @Html("<button id=\"device-down\"+monitor.id class=\"button\" onclick=\"makeCall('"+monitor.id+"', '"+doubleDown+"')\"><<</button>" +
             "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+down+"')\"><</button> " +
             "<span id=\"monitor-temperature" + monitor.id + "\"> 0 &deg;c </span>" +
             " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+up+"')\">></button>" +
             "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+monitor.id+"', '"+doubleUp+"')\">>></button>")
 
-            <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
+            <div><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
                 @Html("<span id=\"monitor-sensor" + monitor.id + "\"> 0  </span>")
-            </p>
-            <p><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
+            </div>
+            <div><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
                 @Html("<span id=\"monitor-increaser" + monitor.id + "\"> 0 </span>")
-            </p>
-        </p>
+            </div>
         } else {
-        <p><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
+        <div><label>@monitor.monitorSensor.fold("None")(ms => ms.description):&nbsp;</label>
             @Html("<input type=\"checkbox\" name=\"monitor-sensor"+monitor.id+"\" id=\"monitor-sensor"+monitor.id + "\" value=\"true\" >")
-        </p>
-        <p><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
+        </div>
+        <div><label>@monitor.monitorIncreaser.fold("None")(mi => mi.description):</label>
             @Html("<input type=\"checkbox\" name=\"monitor-increaser"+monitor.id+"\" id=\"monitor-increaser"+monitor.id + "\" value=\"true\" >")
-        </p>
+        </div>
         }
         </fieldset>
         }
@@ -47,37 +46,31 @@
         @deviceCollection.devices.filter(d=>d.deviceType == model.Device.STROBE).map {strobe =>
         <fieldset>
             <legend>@strobe.description</legend>
-            <p> <label>Enabled:</label>
+            <div style="display:table"> <label>Enabled:</label>
                 @Html("<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-true"+strobe.id + "\" value=\"true\" onclick=\"makeCall('"+strobe.id+"', 'true')\">On "+
                 "<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-false"+strobe.id + "\" value=\"false\" onclick=\"makeCall('"+strobe.id+"', 'false')\" checked>Off ")
-            </p>
-            <p><label>On Duration:</label>
-                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', '"+onDoubleDown+"')\"><<</button>" +
-                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onDown+"')\"><</button> " +
-                "<span id=\"strobe-on" + strobe.id + "\"> 0 seconds </span>" +
-                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onUp+"')\">></button>" +
-                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+onDoubleUp+"')\">>></button>")
-            </p>
-            <p><label>Off Duration:</label>
-                @Html("<button id=\"device-down\"+strobe.id class=\"button\" onclick=\"makeCall('"+strobe.id+"', '"+offDoubleDown+"')\"><<</button>" +
-                "<button id=\"-\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offDown+"')\"><</button> " +
-                "<span id=\"strobe-off" + strobe.id + "\"> 0 seconds</span>" +
-                " <button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offUp+"')\">></button>" +
-                "<button id=\"+\"  class=\"button\" value=\"Next\" onclick=\"makeCall('"+strobe.id+"', '"+offDoubleUp+"')\">>></button>")
-            </p>
-            <p><label>@strobe.monitorIncreaser.fold("None")(si => si.description):</label>
-                @Html("<input type=\"checkbox\" name=\"strobe-increaser"+strobe.id+"\" id=\"strobe-increaser"+strobe.id + "\" value=\"true\" >")
-            </p>
+            </div>
+            <div style="display:table">
+                @strobe_duration(strobe, "On Duration:", onDoubleDown, onDown, onUp, onDoubleUp, "strobe-on")
+            </div>
+            <div style="display:table">
+                @strobe_duration(strobe, "Off Duration:", offDoubleDown, offDown, offUp, offDoubleUp, "strobe-off")
+            </div>
+            <div style="display:table">
+                @digital_increaser(strobe, "strobe-increaser")
+            </div>
         </fieldset>
         }
     </fieldset>
     </div>
-    <div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
+
+
+    <div style="width:460px; float: left" xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Devices</legend>
 
     @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) && (d.deviceType != model.Device.STROBE)).map {device =>
-        <p id="device@device.id">
+        <div id="device@device.id" style="display:table">
             @{device.deviceType match {
                 case ANALOGUE_IN => analogue_in(device)
                 case ANALOGUE_OUT => analogue_out(device)
@@ -85,33 +78,35 @@
                 case DIGITAL_OUT => digital_out(device)
                 case _ => Html("<b>Bad Device</b>")
             }}
-        </p>
+        </div>
         }
-
     </fieldset>
+
+
+
     <!--
     <img src="assets/images/switch_off.png" width="50">
     <img src="assets/images/switch_on.png" width="50">
     -->
     <fieldset>
         <legend>Clock</legend>
-        <p id="clock">
+        <div id="clock">
             <label id="clock-desc">Time Remaining:&nbsp;</label>
             <span id="clock-val"> 00:00:00 </span>
-        </p>
+        </div>
     </fieldset>
 </div>
 
 <div style="width:400px; float: left"  xmlns="http://www.w3.org/1999/html">
     <fieldset>
         <legend>Program</legend>
-        <p class="form-field">
+        <div class="form-field">
         <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
         <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Stop</button>
         <button id="resetButton" onclick="resetSequencer()" class="button" value="Next">Reset</button>
         <button id="nextButton" onclick="nextStep()" class="button" value="Next">Next</button>
         <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
-        </p>
+        </div>
 
 
         <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">

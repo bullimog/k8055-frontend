@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>K8055 Title</title>
+    <link rel="stylesheet" media="screen" href="/assets/stylesheets/main.css">
+    <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascriptReverseRoutes"></script>
+    <script type="text/javascript" src="/assets/javascripts/sequencer.js"></script>
+</head>
+<body>
+
+<h2>Brewing : Setup for mash and boil</h2>
+<div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
+    <fieldset>
+        <legend>Monitors</legend>
+
+        <fieldset>
+            <legend>Mash thermostat</legend>
+            <div> <label>Enabled:</label>
+                <input type="radio" name="monitor-enabledMO-1" id="monitor-trueMO-1" value="true" onclick="makeCall('MO-1', 'true')">On <input type="radio" name="monitor-enabledMO-1" id="monitor-falseMO-1" value="false" onclick="makeCall('MO-1', 'false')" checked>Off
+            </div>
+
+            <div><label>Target:</label>
+                <button id="device-down"+monitor.id class="button" onclick="makeCall('MO-1', 'ddown')"><<</button><button id="-"  class="button" value="Next" onclick="makeCall('MO-1', 'down')"><</button> <span id="monitor-temperatureMO-1"> 0 &deg;c </span> <button id="+"  class="button" value="Next" onclick="makeCall('MO-1', 'up')">></button><button id="+"  class="button" value="Next" onclick="makeCall('MO-1', 'dup')">>></button>
+             </div>
+
+            <div><label>Mash Thermometer:&nbsp;</label>
+                <span id="monitor-sensorMO-1"> 0  </span>
+            </div>
+
+            <div><label>Heat Triac:</label>
+                <span id="monitor-increaserMO-1"> 0 </span>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Mash recirculate &amp; monitor overflow</legend>
+            <div> <label>Enabled:</label>
+                <input type="radio" name="monitor-enabledMO-2" id="monitor-trueMO-2" value="true" onclick="makeCall('MO-2', 'true')">On <input type="radio" name="monitor-enabledMO-2" id="monitor-falseMO-2" value="false" onclick="makeCall('MO-2', 'false')" checked>Off
+            </div>
+
+            <div><label>Mash Overflow:&nbsp;</label>
+                <input type="checkbox" name="monitor-sensorMO-2" id="monitor-sensorMO-2" value="true" >
+            </div>
+            <div><label>Mash Pump:</label>
+                <input type="checkbox" name="monitor-increaserMO-2" id="monitor-increaserMO-2" value="true" >
+            </div>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Sparge water &amp; monitor overflow</legend>
+            <div> <label>Enabled:</label>
+                <input type="radio" name="monitor-enabledMO-3" id="monitor-trueMO-3" value="true" onclick="makeCall('MO-3', 'true')">On <input type="radio" name="monitor-enabledMO-3" id="monitor-falseMO-3" value="false" onclick="makeCall('MO-3', 'false')" checked>Off
+            </div>
+
+            <div><label>Mash Overflow:&nbsp;</label>
+                <input type="checkbox" name="monitor-sensorMO-3" id="monitor-sensorMO-3" value="true" >
+            </div>
+            <div><label>Boil Pump:</label>
+                <input type="checkbox" name="monitor-increaserMO-3" id="monitor-increaserMO-3" value="true" >
+            </div>
+
+        </fieldset>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Strobes</legend>
+
+        <fieldset>
+            <legend>Mash Pump Pulser</legend>
+            <div> <label>Enabled:</label>
+                <input type="radio" name="strobe-enabledST-1" id="strobe-trueST-1" value="true" onclick="makeCall('ST-1', 'true')">On <input type="radio" name="strobe-enabledST-1" id="strobe-falseST-1" value="false" onclick="makeCall('ST-1', 'false')" checked>Off
+            </div>
+            <div><label>On Duration:</label>
+                <button id="device-down"+strobe.id class="button" onclick="makeCall('ST-1', 'onDdown')"><<</button><button id="-"  class="button" value="Next" onclick="makeCall('ST-1', 'onDown')"><</button> <span id="strobe-onST-1"> 0 seconds </span> <button id="+"  class="button" value="Next" onclick="makeCall('ST-1', 'onUp')">></button><button id="+"  class="button" value="Next" onclick="makeCall('ST-1', 'onDup')">>></button>
+            </div>
+            <div><label>Off Duration:</label>
+                <button id="device-down"+strobe.id class="button" onclick="makeCall('ST-1', 'offDdown')"><<</button><button id="-"  class="button" value="Next" onclick="makeCall('ST-1', 'offDown')"><</button> <span id="strobe-offST-1"> 0 seconds</span> <button id="+"  class="button" value="Next" onclick="makeCall('ST-1', 'offUp')">></button><button id="+"  class="button" value="Next" onclick="makeCall('ST-1', 'offDup')">>></button>
+            </div>
+            <div><label>Mash Pump:</label>
+                <input type="checkbox" name="strobe-increaserST-1" id="strobe-increaserST-1" value="true" >
+            </div>
+        </fieldset>
+
+    </fieldset>
+</div>
+<div style="width:460px; float: left" xmlns="http://www.w3.org/1999/html">
+    <fieldset>
+        <legend>Devices</legend>
+
+
+        <div id="deviceAO-1" style="display:table">
+
+            <div style="display:table-cell">
+            <label id="deviceDescAO-1">AO-1: 2: Heat Triac:&nbsp;</label>
+            </div>
+            <div style="display:table-cell">
+            <button id="device-downAO-1"
+                    class="button"
+                    onclick="makeCall('AO-1', 'ddown')">
+                <<
+            </button>
+
+
+            <button id="-"
+                    class="button"
+                    value="Next"
+                    onclick="makeCall('AO-1', 'down')">
+                <
+            </button>
+
+            <span id="device-valAO-1"> 00.0 %</span>
+
+            <button id="+"
+                    class="button"
+                    value="Next"
+                    onclick="makeCall('AO-1', 'up')">
+                >
+            </button>
+
+            <button id="++"
+                    class="button"
+                    value="Next"
+                    onclick="makeCall('AO-1', 'dup')">
+                >>
+            </button>
+            </div>
+
+        </div>
+
+        <div id="deviceDO-1">
+
+
+            <label id="deviceDescDO-1">DO-1: 4: Hopper:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-1"
+                   id="device-trueDO-1"
+                   value="true"
+                   onclick="makeCall('DO-1', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-1"
+                   id="device-falseDO-1"
+                   value="false"
+                   onclick="makeCall('DO-1', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-2">
+
+
+            <label id="deviceDescDO-2">DO-2: 4: Chiller:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-2"
+                   id="device-trueDO-2"
+                   value="true"
+                   onclick="makeCall('DO-2', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-2"
+                   id="device-falseDO-2"
+                   value="false"
+                   onclick="makeCall('DO-2', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-3">
+
+
+            <label id="deviceDescDO-3">DO-3: 4: Heat Select:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-3"
+                   id="device-trueDO-3"
+                   value="true"
+                   onclick="makeCall('DO-3', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-3"
+                   id="device-falseDO-3"
+                   value="false"
+                   onclick="makeCall('DO-3', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-4">
+
+
+            <label id="deviceDescDO-4">DO-4: 4: Mash Valve:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-4"
+                   id="device-trueDO-4"
+                   value="true"
+                   onclick="makeCall('DO-4', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-4"
+                   id="device-falseDO-4"
+                   value="false"
+                   onclick="makeCall('DO-4', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-5">
+
+
+            <label id="deviceDescDO-5">DO-5: 4: Boiler Valve:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-5"
+                   id="device-trueDO-5"
+                   value="true"
+                   onclick="makeCall('DO-5', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-5"
+                   id="device-falseDO-5"
+                   value="false"
+                   onclick="makeCall('DO-5', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-6">
+
+
+            <label id="deviceDescDO-6">DO-6: 4: Wort Pump:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-6"
+                   id="device-trueDO-6"
+                   value="true"
+                   onclick="makeCall('DO-6', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-6"
+                   id="device-falseDO-6"
+                   value="false"
+                   onclick="makeCall('DO-6', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-7">
+
+
+            <label id="deviceDescDO-7">DO-7: 4: Mash Pump:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-7"
+                   id="device-trueDO-7"
+                   value="true"
+                   onclick="makeCall('DO-7', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-7"
+                   id="device-falseDO-7"
+                   value="false"
+                   onclick="makeCall('DO-7', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDO-8" style="float:left;">
+
+
+            <label id="deviceDescDO-8">DO-8: 4: Boil Pump:&nbsp;</label>
+            <input type="radio"
+                   name="device-nameDO-8"
+                   id="device-trueDO-8"
+                   value="true"
+                   onclick="makeCall('DO-8', 'true')">
+            On
+
+            <input type="radio"
+                   name="device-nameDO-8"
+                   id="device-falseDO-8"
+                   value="false"
+                   onclick="makeCall('DO-8', 'false')" checked>
+            Off
+
+
+
+        </div>
+
+        <div id="deviceDI-1">
+
+
+            <label id="deviceDescDI-1">DI-1: 3: Mash Overflow:&nbsp;</label>
+            <input type="checkbox" name="device-nameDI-1" id="device-trueDI-1" value="true">
+
+
+        </div>
+
+        <div id="deviceDI-2">
+
+
+            <label id="deviceDescDI-2">DI-2: 3: Mash Underflow:&nbsp;</label>
+            <input type="checkbox" name="device-nameDI-2" id="device-trueDI-2" value="true">
+
+
+        </div>
+
+        <div id="deviceDI-3">
+
+
+            <label id="deviceDescDI-3">DI-3: 3: Wort Overflow:&nbsp;</label>
+            <input type="checkbox" name="device-nameDI-3" id="device-trueDI-3" value="true">
+
+
+        </div>
+
+        <div id="deviceDI-4">
+
+
+            <label id="deviceDescDI-4">DI-4: 3: Wort underflow:&nbsp;</label>
+            <input type="checkbox" name="device-nameDI-4" id="device-trueDI-4" value="true">
+
+
+        </div>
+
+        <div id="deviceAI-1">
+
+
+            <label id="deviceDescAI-1">AI-1: 1: Mash Thermometer:&nbsp;</label>
+            <span id="device-valAI-1"> 00.0 °c</span>
+
+
+        </div>
+
+        <div id="deviceAI-2">
+
+
+            <label id="deviceDescAI-2">AI-2: 1: Boil Thermometer:&nbsp;</label>
+            <span id="device-valAI-2"> 00.0 °c</span>
+
+
+        </div>
+
+
+    </fieldset>
+    <!--
+    <img src="assets/images/switch_off.png" width="50">
+    <img src="assets/images/switch_on.png" width="50">
+    -->
+    <fieldset>
+        <legend>Clock</legend>
+        <div id="clock">
+            <label id="clock-desc">Time Remaining:&nbsp;</label>
+            <span id="clock-val"> 00:00:00 </span>
+        </div>
+    </fieldset>
+</div>
+
+<div style="width:400px; float: left"  xmlns="http://www.w3.org/1999/html">
+    <fieldset>
+        <legend>Program</legend>
+        <div class="form-field">
+            <button id="startButton" onclick="startSequencer()" class="button" value="Next">Start</button>
+            <button id="stopButton" onclick="stopSequencer()" class="button" value="Next">Stop</button>
+            <button id="resetButton" onclick="resetSequencer()" class="button" value="Next">Reset</button>
+            <button id="nextButton" onclick="nextStep()" class="button" value="Next">Next</button>
+            <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
+        </div>
+
+
+        <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
+
+            <table class="program" border="1">
+                <tr><th>#</th><th>Device</th><th>Action</th></tr>
+
+
+                <tr id="step-description1">
+                    <td>1</td>
+                    <td colspan="2" id="stepDevice1">Returns all devices back to datum</td>
+                </tr>
+
+
+
+                <tr id="step2">
+                    <td>2</td>
+                    <td id="stepDevice2">Mash Pump Pulser</td>
+                    <td id="stepDesc2">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step3">
+                    <td>3</td>
+                    <td id="stepDevice3">Mash thermostat</td>
+                    <td id="stepDesc3">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step4">
+                    <td>4</td>
+                    <td id="stepDevice4">Mash recirculate &amp; monitor overflow</td>
+                    <td id="stepDesc4">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step5">
+                    <td>5</td>
+                    <td id="stepDevice5">Sparge water &amp; monitor overflow</td>
+                    <td id="stepDesc5">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step6">
+                    <td>6</td>
+                    <td id="stepDevice6">Heat Triac</td>
+                    <td id="stepDesc6">Set to 0.0%</td>
+                </tr>
+
+
+
+                <tr id="step7">
+                    <td>7</td>
+                    <td id="stepDevice7">Hopper</td>
+                    <td id="stepDesc7">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step8">
+                    <td>8</td>
+                    <td id="stepDevice8">Chiller</td>
+                    <td id="stepDesc8">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step9">
+                    <td>9</td>
+                    <td id="stepDevice9">Heat Select</td>
+                    <td id="stepDesc9">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step10">
+                    <td>10</td>
+                    <td id="stepDevice10">Mash Valve</td>
+                    <td id="stepDesc10">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step11">
+                    <td>11</td>
+                    <td id="stepDevice11">Boiler Valve</td>
+                    <td id="stepDesc11">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step12">
+                    <td>12</td>
+                    <td id="stepDevice12">Wort Pump</td>
+                    <td id="stepDesc12">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step13">
+                    <td>13</td>
+                    <td id="stepDevice13">Mash Pump</td>
+                    <td id="stepDesc13">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step14">
+                    <td>14</td>
+                    <td id="stepDevice14">Boil Pump</td>
+                    <td id="stepDesc14">Switch off </td>
+                </tr>
+
+
+
+                <tr id="step-description15">
+                    <td>15</td>
+                    <td colspan="2" id="stepDevice15">Get the liquor tank up to a high temperature</td>
+                </tr>
+
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+</body>
+</html>
+

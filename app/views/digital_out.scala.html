@@ -1,7 +1,7 @@
 @import model.Device
 @(device: Device)
 
-<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<label class="do-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
 <input type="radio"
        name="device-name@device.id"
        id="device-true@device.id"

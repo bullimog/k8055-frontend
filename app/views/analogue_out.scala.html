@@ -1,6 +1,6 @@
 @import model.Device
 @(device: Device)
-<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<label class="ao-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
 <button id="device-down@device.id"
         class="button"
         onclick="makeCall('@device.id', 'ddown')">

@@ -1,0 +1,34 @@
+@import connectors.Configuration._
+@(strobe: model.Device, label: String, dDown: String, down: String, up: String, Dup: String, mode: String)
+
+<label class="strobe-duration-label">On Duration: </label>
+<button id="device-down@strobe.id"
+        class="button"
+        onclick="makeCall('@strobe.id', '@dDown')">
+       <<
+</button>
+
+<button id="-"
+        class="button"
+        value="Next"
+        onclick="makeCall('@strobe.id', '@down')">
+       <
+</button>
+
+<span id="@mode@strobe.id"> 0 seconds</span>
+
+<button id="+"
+        class="button"
+        value="Next"
+        onclick="makeCall('@strobe.id', '@up')">
+       >
+</button>
+
+<button id="++"
+        class="button"
+        value="Next"
+        onclick="makeCall('@strobe.id', '@Dup')">
+       >>
+</button>
+
+

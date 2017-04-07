@@ -1,14 +1,8 @@
 @import model.Device
 @(device: Device)
+<label class="di-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
 
-<label id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<div class="digital-in">
 <input type="checkbox" name="device-name@device.id" id="device-true@device.id" value="true">
-
-
-<!--
-<div class="checkboxFour">
-    <input type="checkbox" value="true" id="device-true@device.id" name="device-name@device.id" />
-    <label for="device-true@device.id"></label>
+<label for="device-true@device.id"></label>
 </div>
-
--->
