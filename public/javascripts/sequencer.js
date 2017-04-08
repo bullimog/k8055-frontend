@@ -64,7 +64,7 @@
           }
           case 4: {                                                              //DIGITAL_OUT
             if(compDigitalState) $("#device-true"+compId).prop("checked", true)
-            else $("#device-false"+compId).prop("checked", true);
+            else $("#device-true"+compId).prop("checked", false);
             break;
           }
         }
@@ -109,7 +109,7 @@
 //       console.debug("monitor: " + sensorType)
     //    console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
-            else $("#monitor-false"+monitorId).prop("checked", true);
+            else $("#monitor-true"+monitorId).prop("checked", false);
 
        $("#monitor-temperature"+monitorId).text(monitorTemp+" "+sensorUnit);
 
@@ -139,7 +139,7 @@
 
 //         console.debug("strobe: "+ strobeId + " - "  + strobeEnabled +" - " + strobeOnTime +" - "+ strobeOffTime + " - " + increaserState);
          if(strobeEnabled) $("#strobe-true"+strobeId).prop("checked", true)
-              else $("#strobe-false"+strobeId).prop("checked", true);
+              else $("#strobe-true"+strobeId).prop("checked", false);
 
          $("#strobe-on"+strobeId).text(strobeOnTime+" seconds");
          $("#strobe-off"+strobeId).text(strobeOffTime+" seconds");
