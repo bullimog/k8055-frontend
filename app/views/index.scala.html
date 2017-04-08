@@ -10,12 +10,7 @@
     <legend>Monitors</legend>
     @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
       <fieldset>
-        <legend>@monitor.description</legend>
-        <div style="display:table">
-          <label>Enabled:</label>
-          @Html("<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-true"+monitor.id + "\" value=\"true\" onclick=\"makeCall('"+monitor.id+"', 'true')\">On "+
-                "<input type=\"radio\" name=\"monitor-enabled"+monitor.id+"\" id=\"monitor-false"+monitor.id + "\" value=\"false\" onclick=\"makeCall('"+monitor.id+"', 'false')\" checked>Off ")
-        </div>
+        @monitor_enable(monitor)
         @if(monitor.monitorSensor.get.deviceType == model.Device.ANALOGUE_IN) {
           <div style="display:table">
             @analogue_out(monitor, "Target:", "monitor-temperature")
@@ -37,12 +32,7 @@
     <legend>Strobes</legend>
     @deviceCollection.devices.filter(d=>d.deviceType == model.Device.STROBE).map {strobe =>
       <fieldset>
-        <legend>@strobe.description</legend>
-        <div style="display:table">
-          <label>Enabled:</label>
-          @Html("<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-true"+strobe.id + "\" value=\"true\" onclick=\"makeCall('"+strobe.id+"', 'true')\">On "+
-                "<input type=\"radio\" name=\"strobe-enabled"+strobe.id+"\" id=\"strobe-false"+strobe.id + "\" value=\"false\" onclick=\"makeCall('"+strobe.id+"', 'false')\" checked>Off ")
-        </div>
+        @strobe_enable(strobe)
         <div style="display:table">
           @strobe_duration(strobe, "On Duration:", onDoubleDown, onDown, onUp, onDoubleUp, "strobe-on")
         </div>

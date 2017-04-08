@@ -2,18 +2,14 @@
 @(device: Device)
 
 <label class="do-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
-<input type="radio"
-       name="device-name@device.id"
-       id="device-true@device.id"
-       value="true"
-       onclick="makeCall('@device.id', 'true')">
-       On
 
-<input type="radio"
-       name="device-name@device.id"
-       id="device-false@device.id"
-       value="false"
-       onclick="makeCall('@device.id', 'false')" checked>
-       Off
 
+<div class="digital-out">
+    <input type="checkbox"
+           name="device-name@device.id"
+           id="device-true@device.id"
+           value="true"
+           onclick="makeCall('@device.id', this.checked)">
+    <label for="device-true@device.id"></label>
+</div>
 

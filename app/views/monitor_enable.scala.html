@@ -1,0 +1,15 @@
+@import model.Device
+@(device: Device)
+
+<legend>@device.description</legend>
+
+<div class="digital-out">
+    <input type="checkbox"
+           name="monitor-enabled@device.id"
+           id="monitor-true@device.id"
+           value="true"
+           onclick="makeCall('@device.id', this.checked)">
+    <label for="monitor-true@device.id"></label>
+</div>
+
+
