@@ -1,0 +1,7 @@
+@import model.Device
+@(device: Device)
+
+<label class="ai-device-label">
+    @device.monitorSensor.fold("None")(ms => ms.id +" "+ ms.deviceType+ " " + ms.description)
+</label>
+<span id="monitor-sensor@device.id"> 00.0 @device.units.getOrElse("")</span>

@@ -15,6 +15,12 @@
           <div style="display:table">
             @analogue_out(monitor, "Target:", "monitor-temperature")
           </div>
+          <div style="display:table">
+            @monitor_sensor(monitor)
+          </div>
+          <div style="display:table">
+            @monitor_increaser(monitor)
+          </div>
         } else {
           <div style="display:table">
             @digital_sensor(monitor)
