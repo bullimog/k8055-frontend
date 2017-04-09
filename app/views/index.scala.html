@@ -5,28 +5,27 @@
 
 @main("K8055 Title") {
 <h2>@deviceCollection.name : @deviceCollection.description</h2>
-<div style="width:450px; float: left" xmlns="http://www.w3.org/1999/html">
+<div class="monitors-and-strobes">
   <fieldset>
     <legend>Monitors</legend>
     @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
       <fieldset>
         @monitor_enable(monitor)
         @if(monitor.monitorSensor.get.deviceType == model.Device.ANALOGUE_IN) {
-          <div style="display:table">
-            @analogue_out(monitor, "Target:", "monitor-temperature")
+          <div class="item-aligned">
+              @analogue_out(monitor, "Target:", "monitor-temperature")
           </div>
-          <div style="display:table">
+          <div class="item-aligned">
             @monitor_sensor(monitor)
           </div>
-          <div style="display:table">
+          <div class="item-aligned">
             @monitor_increaser(monitor)
           </div>
         } else {
-          <div style="display:table">
+          <div class="item-aligned">
             @digital_sensor(monitor)
           </div>
-
-          <div style="display:table">
+          <div class="item-aligned">
             @digital_increaser(monitor, "monitor-increaser")
           </div>
         }
@@ -39,13 +38,13 @@
     @deviceCollection.devices.filter(d=>d.deviceType == model.Device.STROBE).map {strobe =>
       <fieldset>
         @strobe_enable(strobe)
-        <div style="display:table">
+        <div class="item-aligned">
           @strobe_duration(strobe, "On Duration:", onDoubleDown, onDown, onUp, onDoubleUp, "strobe-on")
         </div>
-        <div style="display:table">
+        <div class="item-aligned">
           @strobe_duration(strobe, "Off Duration:", offDoubleDown, offDown, offUp, offDoubleUp, "strobe-off")
         </div>
-        <div style="display:table">
+        <div class="item-aligned">
           @digital_increaser(strobe, "strobe-increaser")
         </div>
       </fieldset>
@@ -54,13 +53,13 @@
 </div>
 
 
-<div style="width:460px; float: left" xmlns="http://www.w3.org/1999/html">
+<div class="devices">
   <fieldset>
     <legend>Devices</legend>
 
     @deviceCollection.devices.filter(d=>(d.deviceType != model.Device.MONITOR) &&
                                         (d.deviceType != model.Device.STROBE)).map {device =>
-      <div id="device@device.id" style="display:table">
+      <div id="device@device.id" class="item-aligned">
         @{device.deviceType match {
           case ANALOGUE_IN => analogue_in(device)
           case ANALOGUE_OUT => analogue_out(device, device.id +": "+device.deviceType+": "+device.description+":", "device-val")
@@ -82,7 +81,7 @@
   </fieldset>
 </div>
 
-<div style="width:400px; float: left"  xmlns="http://www.w3.org/1999/html">
+<div class="program">
   <fieldset>
     <legend>Program</legend>
     <div class="form-field">
@@ -93,7 +92,7 @@
       <button id="previousButton" onclick="previousStep()" class="button" value="Next">Previous</button>
     </div>
 
-    <div style="overflow:scroll; height:500px;"  xmlns="http://www.w3.org/1999/html">
+    <div class="program-list">
 
       <table class="program" border="1">
         <tr><th>#</th><th>Device</th><th>Action</th></tr>

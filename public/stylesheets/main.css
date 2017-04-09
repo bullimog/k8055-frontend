@@ -6,12 +6,17 @@ th    {text-align: left;     }
 td    {padding: 4px; }
 div   {font-family:Arial,"libra sans",sans-serif; }
 
+.monitors-and-strobes {width:450px; float: left}
+.devices {width:460px; float: left}
+.program {width:400px; float: left}
+.program-list {overflow:scroll; height:500px;}
+.item-aligned {display:table;}
 .comment {color: green; font-weight:bold}
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
-.ai-device-label{color: black; text-align: left; width: 210px;}
-.ao-device-label{color: black; text-align: left; width: 150px;}
+.ai-device-label{color: black; text-align: left; width: 210px; height: 30px;}
+.ao-device-label{color: black; text-align: left; width: 150px; height: 30px;}
 .di-device-label{color: black; text-align: left; width: 180px;}
 .do-device-label{color: black; text-align: left; width: 210px;}
 .d-increaser-label{color: black; text-align: left; width: 100px;}
