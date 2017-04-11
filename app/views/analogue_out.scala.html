@@ -1,7 +1,10 @@
 @import connectors.Configuration._
 @import model.Device
 @(device: Device, label: String, outputId: String)
-<label class="ao-device-label" id="deviceDesc@device.id">@label</label>
+<label class="ao-device-label" id="deviceDesc@device.id">
+    <img src="/assets/images/@device.deviceClass-icon.png" title="@device.id @device.deviceType" height="25">
+    @label
+</label>
 <button id="device-down@device.id"
         class="button"
         onclick="makeCall('@device.id', '@doubleDown')">

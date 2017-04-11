@@ -1,7 +1,11 @@
 @import model.Device
 @(device: Device)
 
-<label class="do-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
+<label class="do-device-label" id="deviceDesc@device.id">
+     <img src="/assets/images/@device.deviceClass-icon.png" title="@device.id @device.deviceType" height="25">
+    @device.description:
+</label>
+
 
 
 <div class="digital-out">

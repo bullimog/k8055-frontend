@@ -1,7 +1,12 @@
 @import model.Device
 @(monitor: Device)
 
-<label class="d-sensor-label" id="deviceDesc@monitor.id">@monitor.monitorSensor.fold("None")(ms => ms.description):</label>
+<label class="d-sensor-label" id="deviceDesc@monitor.id">
+    @monitor.monitorSensor.map {ms =>
+        <img src="/assets/images/@ms.deviceClass-icon.png" title="@ms.id @ms.deviceType" height="25">
+         @ms.description:
+    }
+</label>
 
 <div class="digital-in">
 <input type="checkbox" name="monitor-sensor@monitor.id" id="monitor-sensor@monitor.id" value="true">

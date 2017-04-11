@@ -1,6 +1,11 @@
 
 @(device: model.Device, name:String)
-<label class="d-increaser-label">@device.monitorIncreaser.fold("None")(si => si.description):</label>
+<label class="d-increaser-label">
+    @device.monitorIncreaser.map{si =>
+        <img src="/assets/images/@si.deviceClass-icon.png" title="@si.id @si.deviceType" height="25">
+        @si.description:
+    }
+</label>
 
 <div class="digital-in">
     <input type="checkbox" name="@name@device.id" id="@name@device.id" value="true">

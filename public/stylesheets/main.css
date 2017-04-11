@@ -15,12 +15,12 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
-.ai-device-label{color: black; text-align: left; width: 210px; height: 30px;}
-.ao-device-label{color: black; text-align: left; width: 150px; height: 30px;}
-.di-device-label{color: black; text-align: left; width: 180px;}
-.do-device-label{color: black; text-align: left; width: 210px;}
-.d-increaser-label{color: black; text-align: left; width: 100px;}
-.d-sensor-label{color: black; text-align: left; width: 140px;}
+.ai-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 210px; height: 30px;}
+.ao-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px; height: 30px;}
+.di-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 180px;}
+.do-device-label{color: black; text-align: left; text-vertical-align: top; width: 210px;}
+.d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 140px;}
+.d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 140px;}
 
 .btn-disable
         {

@@ -1,6 +1,9 @@
 @import model.Device
 @(device: Device)
 
-<label class="ai-device-label" id="deviceDesc@device.id">@device.id: @device.deviceType: @device.description:&nbsp;</label>
-<span id="device-val@device.id"> 00.0 @device.units.getOrElse("")</span>
+<label class="ai-device-label" id="deviceDesc@device.id">
+    <img src="/assets/images/@device.deviceClass-icon.png" title="@device.id @device.deviceType" height="25">
+    @device.description:
+</label>
+<div style="vertical-align: bottom" id="device-val@device.id"> 00.0 @device.units.getOrElse("")</div>
 

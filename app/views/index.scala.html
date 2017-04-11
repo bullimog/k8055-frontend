@@ -62,7 +62,7 @@
       <div id="device@device.id" class="item-aligned">
         @{device.deviceType match {
           case ANALOGUE_IN => analogue_in(device)
-          case ANALOGUE_OUT => analogue_out(device, device.id +": "+device.deviceType+": "+device.description+":", "device-val")
+          case ANALOGUE_OUT => analogue_out(device, device.description+":", "device-val")
           case DIGITAL_IN => digital_in(device)
           case DIGITAL_OUT => digital_out(device)
           case _ => Html("<b>Bad Device</b>")
