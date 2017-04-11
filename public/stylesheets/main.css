@@ -8,7 +8,7 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 
 .monitors-and-strobes {width:450px; float: left}
 .devices {width:460px; float: left}
-.program {width:400px; float: left}
+.sequencer {width:400px; float: left}
 .program-list {overflow:scroll; height:500px;}
 .item-aligned {display:table;}
 .comment {color: green; font-weight:bold}
