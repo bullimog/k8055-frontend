@@ -8,8 +8,9 @@ div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 
 .monitors-and-strobes {width:440px; float: left}
 .devices {width:400px; float: left}
+.form-field {padding-bottom: 10px}
 .sequencer {width:400px; float: left}
-.program-list {overflow:scroll; height:500px;}
+.program-list {overflow:scroll; height:500px; padding-top: 1px}
 .item-aligned {display:table;}
 .comment {color: green; font-weight:bold}
 .running {color: red; font-weight:bold}
