@@ -6,7 +6,7 @@ import play.api.libs.json.{JsPath, Json, Reads}
 import scala.annotation.tailrec
 
 
-case class Device(id: String, description: String, deviceType: Int, channel:Int, deviceClass: Option[String],
+case class Device(id: String, description: String, deviceType: Int, channel:Int, icon: Option[String],
                   units:Option[String] = None,
                   monitorSensor:Option[Device] = None, monitorIncreaser:Option[Device] = None,
                   monitorDecreaser:Option[Device] = None, digitalState:Option[Boolean] = None,
@@ -27,7 +27,7 @@ object Device {
     (JsPath \ "description").read[String] and
     (JsPath \ "deviceType").read[Int] and
     (JsPath \ "channel").read[Int] and
-    (JsPath \ "deviceClass").readNullable[String] and
+    (JsPath \ "icon").readNullable[String] and
     (JsPath \ "units").readNullable[String] and
     (JsPath \ "monitorSensor").readNullable[Device] and
     (JsPath \ "monitorIncreaser").readNullable[Device] and
@@ -63,7 +63,7 @@ object Device {
     val strobeOnTime:Option[Double] = Some(rawDevice.strobeOnTime.getOrElse(0).toDouble)
     val strobeOffTime:Option[Double] = Some(rawDevice.strobeOffTime.getOrElse(0).toDouble)
 
-    Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.deviceClass,
+    Device(rawDevice.id, rawDevice.description, rawDevice.deviceType, rawDevice.channel, rawDevice.icon,
       rawDevice.units, monitorSensor, monitorIncreaser, monitorDecreaser, rawDevice.digitalState, analogueState,
        strobeOnTime, strobeOffTime)
   }

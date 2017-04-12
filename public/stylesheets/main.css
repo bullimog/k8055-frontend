@@ -4,10 +4,10 @@ label { display: table-cell; }
 input { display: table-cell; }
 th    {text-align: left;     }
 td    {padding: 4px; }
-div   {font-family:Arial,"libra sans",sans-serif; }
+div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 
-.monitors-and-strobes {width:450px; float: left}
-.devices {width:460px; float: left}
+.monitors-and-strobes {width:440px; float: left}
+.devices {width:400px; float: left}
 .sequencer {width:400px; float: left}
 .program-list {overflow:scroll; height:500px;}
 .item-aligned {display:table;}
@@ -19,8 +19,8 @@ div   {font-family:Arial,"libra sans",sans-serif; }
 .ao-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px; height: 30px;}
 .di-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 180px;}
 .do-device-label{color: black; text-align: left; text-vertical-align: top; width: 210px;}
-.d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 140px;}
-.d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 140px;}
+.d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
+.d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
 
 .btn-disable
         {

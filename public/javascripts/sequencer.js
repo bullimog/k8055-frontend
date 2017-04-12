@@ -3,13 +3,22 @@
 
   //console.debug("current="+current)
 
-//    if(current >= 0) {
       var steps = $(".program").children().children();
       for(var i=1; i<current; i++){
         $("#"+steps[i].id).removeClass("to-run");
         $("#"+steps[i].id).removeClass("running");
         $("#"+steps[i].id).addClass("ran");
       }
+
+      var currentDiv = document.getElementById("step"+(current))
+      if (currentDiv == null){
+        currentDiv = document.getElementById("step-description"+(current));
+      }
+
+      if(currentDiv != null) {
+        document.getElementById("program-list").scrollTop = currentDiv.offsetTop-100;
+      }
+
 
       $("#step"+current).removeClass("to-run");
       $("#step"+current).addClass("running");

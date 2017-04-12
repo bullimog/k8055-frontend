@@ -2,7 +2,7 @@
 @(device: model.Device, name:String)
 <label class="d-increaser-label">
     @device.monitorIncreaser.map{si =>
-        <img src="/assets/images/@si.deviceClass-icon.png" title="@si.id @si.deviceType" height="25">
+        <img src="/assets/images/@si.icon-icon.png" title="@si.id @si.deviceType" height="25">
         @si.description:
     }
 </label>
