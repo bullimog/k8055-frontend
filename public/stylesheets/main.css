@@ -7,7 +7,7 @@ td    {padding: 4px; }
 div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 
 .monitors-and-strobes {width:440px; float: left}
-.devices {width:400px; float: left}
+.devices {width:420px; float: left}
 .form-field {padding-bottom: 10px}
 .sequencer {width:400px; float: left}
 .program-list {overflow:scroll; height:500px; padding-top: 1px}
@@ -16,12 +16,14 @@ div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
-.ai-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 210px; height: 30px;}
+.ai-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 210px; height: 20px;}
 .ao-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px; height: 30px;}
 .di-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 180px;}
 .do-device-label{color: black; text-align: left; text-vertical-align: top; width: 210px;}
 .d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
 .d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
+.clock-label{color: black; text-align: left; text-vertical-align: bottom; width: 230px; height: 30px;}
+.auto-label{color: black; text-align: left; text-vertical-align: bottom; width: 100px;}
 
 .btn-disable
         {

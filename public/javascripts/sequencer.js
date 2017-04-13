@@ -1,4 +1,6 @@
 
+
+
   function highlightSteps(current){
 
   //console.debug("current="+current)
@@ -15,7 +17,9 @@
         currentDiv = document.getElementById("step-description"+(current));
       }
 
-      if(currentDiv != null) {
+      var autoScroll = document.getElementById("auto-scroll-program")
+
+      if(currentDiv != null && autoScroll.checked == true) {
         document.getElementById("program-list").scrollTop = currentDiv.offsetTop-100;
       }
 
@@ -161,7 +165,10 @@
 
   function startSequencer(){jsRoutes.controllers.StatusController.startSequencer(null).ajax();};
   function stopSequencer(){jsRoutes.controllers.StatusController.stopSequencer(null).ajax();};
-  function resetSequencer(){jsRoutes.controllers.StatusController.resetSequencer(null).ajax();};
+  function resetSequencer(){
+    document.getElementById("program-list").scrollTop = 0;
+    jsRoutes.controllers.StatusController.resetSequencer(null).ajax();
+    };
   function nextStep(){jsRoutes.controllers.StatusController.nextStep(null).ajax();};
   function previousStep(){jsRoutes.controllers.StatusController.previousStep(null).ajax();};
 

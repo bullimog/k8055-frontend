@@ -24,8 +24,6 @@
         } else {
           <div class="item-aligned">
             @digital_sensor(monitor)
-          </div>
-          <div class="item-aligned">
             @digital_increaser(monitor, "monitor-increaser")
           </div>
         }
@@ -74,9 +72,11 @@
 
   <fieldset>
     <legend>Clock</legend>
-    <div id="clock">
+    <div class="item-aligned" >
       <label id="clock-desc">Time Remaining:&nbsp;</label>
-      <span id="clock-val"> 00:00:00 </span>
+      <div id="clock" class="clock-label" >
+        <span id="clock-val"> 00:00:00 </span>
+      </div>
     </div>
   </fieldset>
 </div>
@@ -112,6 +112,18 @@
         }
       </table>
     </div>
+    <div class="item-aligned">
+    <label class="auto-label">
+      Auto Scroll:
+    </label>
+    <div class="digital-out">
+      <input type="checkbox"
+             name="auto-scroll-program"
+             id="auto-scroll-program"
+             value="true">
+      <label for="auto-scroll-program"></label>
+    </div>
+  </div>
   </fieldset>
 </div>
 }
