@@ -93,7 +93,7 @@ input[type=checkbox] {
 	height: 23px;
 	background: #333;
 	margin: 3px 4px;
-
+    pointer-events: fnone;
 	border-radius: 50px;
 	position: relative;
 }
@@ -148,4 +148,34 @@ input[type=checkbox] {
 .digital-out input[type=checkbox]:checked + label {
 	left: 34px;
 	background: #26ca28;
+}
+
+
+
+.btn {
+  background: #dddddd;
+  background-image: -webkit-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -moz-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -ms-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -o-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: linear-gradient(to bottom, #dddddd, #aaaaaa);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 12px;
+  padding: 2px 5px 2px 5px;
+  border: solid #000000 1px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #eeeeee;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -moz-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -ms-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -o-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: linear-gradient(to bottom, #eeeeee, #bbbbbb);
+  text-decoration: none;
 }
