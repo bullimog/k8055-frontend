@@ -6,13 +6,13 @@
     @label
 </label>
 <button id="device-down@device.id"
-        class="button"
+        class="btn"
         onclick="makeCall('@device.id', '@doubleDown')">
 <<
 </button>
 
 <button id="-"
-        class="button"
+        class="btn"
         value="Next"
         onclick="makeCall('@device.id', '@down')">
 <
@@ -21,14 +21,14 @@
 <span id="@outputId@device.id"> 00.0 @device.units.getOrElse("")</span>
 
 <button id="+"
-        class="button"
+        class="btn"
         value="Next"
         onclick="makeCall('@device.id', '@up')">
 >
 </button>
 
 <button id="++"
-        class="button"
+        class="btn"
         value="Next"
         onclick="makeCall('@device.id', '@doubleUp')">
 >>

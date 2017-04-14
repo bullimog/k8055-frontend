@@ -10,7 +10,7 @@ div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 .devices {width:420px; float: left}
 .form-field {padding-bottom: 10px}
 .sequencer {width:400px; float: left}
-.program-list {overflow:scroll; height:500px; padding-top: 1px}
+.program-list {overflow:scroll; height:490px; padding-top: 1px}
 .item-aligned {display:table;}
 .comment {color: green; font-weight:bold}
 .running {color: red; font-weight:bold}
@@ -22,26 +22,8 @@ div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 .do-device-label{color: black; text-align: left; text-vertical-align: top; width: 210px;}
 .d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
 .d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
-.clock-label{color: black; text-align: left; text-vertical-align: bottom; width: 230px; height: 30px;}
+.clock-label{color: black; text-align: left; text-vertical-align: bottom; width: 230px;}
 .auto-label{color: black; text-align: left; text-vertical-align: bottom; width: 100px;}
-
-.btn-disable
-        {
-        cursor: fdefault;
-        pointer-events: fnone;
-        /*Button disabled - CSS color class*/
-        color: #c0c0c0;
-        background-color: #ffffff;
-        }
-
-.btn-enable
-        {
-        cursor: fdefault;
-        pointer-events: fauto;
-        color: #000000;
-        background-color: #c0c0c0;
-        }
-
 
 
 input[type=checkbox] {
@@ -166,7 +148,7 @@ input[type=checkbox] {
   color: #000000;
   font-size: 12px;
   padding: 2px 5px 2px 5px;
-  border: solid #000000 1px;
+  border: solid #666666 1px;
   text-decoration: none;
 }
 
@@ -179,3 +161,20 @@ input[type=checkbox] {
   background-image: linear-gradient(to bottom, #eeeeee, #bbbbbb);
   text-decoration: none;
 }
+
+.btn-disable
+        {
+        cursor: fdefault;
+        pointer-events: fnone;
+        /*Button disabled - CSS color class*/
+        color: #cccccc;
+        background: #eeeeee;
+        }
+
+.btn-enable
+        {
+        cursor: fdefault;
+        pointer-events: fauto;
+        color: #000000;
+        background: #c0c0c0;
+        }
