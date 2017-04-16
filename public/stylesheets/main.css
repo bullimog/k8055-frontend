@@ -5,13 +5,15 @@ input { display: table-cell; }
 th    {text-align: left;     }
 td    {padding: 4px; }
 div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
+fieldset{padding: 3px; margin: 6px;}
+h2{padding: 1px; margin: 1px;}
 
 .monitors-and-strobes {width:440px; float: left}
 .devices {width:420px; float: left}
 .form-field {padding-bottom: 10px}
 .sequencer {width:400px; float: left}
-.program-list {overflow:scroll; height:490px; padding-top: 1px}
-.item-aligned {display:table;}
+.program-list {overflow:scroll; height:467px; padding-top: 1px}
+.item-aligned {display:table; margin: 2px;}
 .comment {color: green; font-weight:bold}
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
@@ -23,7 +25,7 @@ div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
 .d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
 .d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
 .clock-label{color: black; text-align: left; text-vertical-align: bottom; width: 230px;}
-.auto-label{color: black; text-align: left; text-vertical-align: bottom; width: 100px;}
+.auto-label{color: black; text-align: right; text-vertical-align: bottom; width: 100px;}
 
 
 input[type=checkbox] {

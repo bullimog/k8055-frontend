@@ -7,6 +7,7 @@
 
       var steps = $(".program").children().children();
       for(var i=1; i<current; i++){
+        console.debug("############# "+ $("#"+steps[i].id))
         $("#"+steps[i].id).removeClass("to-run");
         $("#"+steps[i].id).removeClass("running");
         $("#"+steps[i].id).addClass("ran");
