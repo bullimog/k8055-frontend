@@ -3,7 +3,7 @@
 @import connectors.Configuration._
 @(sequence: model.ReadableSequence, deviceCollection: model.DeviceCollection)
 
-@main("K8055 Title") {
+@main(deviceCollection.name) {
 <h2>@deviceCollection.name : @deviceCollection.description</h2>
 <div class="monitors-and-strobes">
   @deviceCollection.devices.filter(d=>d.deviceType == model.Device.MONITOR).map {monitor =>
@@ -81,11 +81,11 @@
     <div class="form-field">
 
       <div class="item-aligned">
-        <button id="startButton" onclick="startSequencer()" class="btn" value="Next">&#9654;</button>
-        <button id="stopButton" onclick="stopSequencer()" class="btn" value="Next">&#9632;</button>
-        <button id="previousButton" onclick="previousStep()" class="btn" value="Next">&#9664;&#9664;</button>
-        <button id="nextButton" onclick="nextStep()" class="btn" value="Next">&#9654;&#9654;</button>
-        <button id="resetButton" onclick="resetSequencer()" class="btn" value="Next">&#9851;</button>
+        <button id="startButton" onclick="startSequencer()" class="btn" value="play" title="Play program">&#9654;</button>
+        <button id="stopButton" onclick="stopSequencer()" class="btn" value="stop" title="Stop program">&#9632;</button>
+        <button id="previousButton" onclick="previousStep()" class="btn" value="back" title="Skip back a step">&#9664;&#9664;</button>
+        <button id="nextButton" onclick="nextStep()" class="btn" value="Next" title="Skip forward a step">&#9654;&#9654;</button>
+        <button id="resetButton" onclick="resetSequencer()" class="btn" value="reset" title="Reset program">&#9851;</button>
         <label class="auto-label">
           Scroll:
         </label>

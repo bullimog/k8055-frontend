@@ -5,7 +5,7 @@ input { display: table-cell; }
 th    {text-align: left;     }
 td    {padding: 4px; }
 div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
-fieldset{padding: 3px; margin: 6px;}
+fieldset{padding: 3px; margin: 6px; background-color:#e5e5e5;}
 h2{padding: 1px; margin: 1px;}
 
 .monitors-and-strobes {width:440px; float: left}
@@ -123,7 +123,7 @@ input[type=checkbox] {
 	top: 4px;
 	z-index: 1;
 	left: 5px;
-	background: #ddd;
+	background: #eee;
 }
 
 /**
