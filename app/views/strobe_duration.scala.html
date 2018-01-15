@@ -1,7 +1,7 @@
 @import connectors.Configuration._
 @(strobe: model.Device, label: String, dDown: String, down: String, up: String, Dup: String, mode: String)
 
-<label class="strobe-duration-label">On Duration: </label>
+<label class="strobe-duration-label">@label </label>
 <button id="device-down@strobe.id"
         class="btn"
         onclick="makeCall('@strobe.id', '@dDown')">
