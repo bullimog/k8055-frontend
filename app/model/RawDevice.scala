@@ -4,7 +4,8 @@ import play.api.libs.json.{Json, JsPath, Reads}
 import play.api.libs.functional.syntax._
 
 
-case class RawDevice(id: String, description: String, deviceType: Int, channel:Int, units:Option[String] = None,
+case class RawDevice(id: String, description: String, deviceType: Int, channel:Int,  icon: Option[String],
+                  units:Option[String] = None,
                   conversionFactor:Option[Double] = None, conversionOffset:Option[Double] = None,
                   decimalPlaces:Option[Int] = None, monitorSensor:Option[String] = None,
                   monitorIncreaser:Option[String] = None, monitorDecreaser:Option[String] = None,
@@ -19,6 +20,7 @@ object RawDevice {
     (JsPath \ "description").read[String] and
     (JsPath \ "deviceType").read[Int] and
     (JsPath \ "channel").read[Int] and
+    (JsPath \ "icon").readNullable[String] and
     (JsPath \ "units").readNullable[String] and
     (JsPath \ "conversionFactor").readNullable[Double] and
     (JsPath \ "conversionOffset").readNullable[Double] and

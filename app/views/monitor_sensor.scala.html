@@ -1,0 +1,10 @@
+@import model.Device
+@(device: Device)
+
+<label class="ai-device-label">
+    @device.monitorSensor.map {ms =>
+    <img src="/assets/images/@ms.icon-icon.png" title="@ms.id @ms.deviceType" height="25">
+    @ms.description:
+    }
+</label>
+<span id="monitor-sensor@device.id"> 00.0 @device.units.getOrElse("")</span>

@@ -1,0 +1,36 @@
+@import connectors.Configuration._
+@import model.Device
+@(device: Device, label: String, outputId: String)
+<label class="ao-device-label" id="deviceDesc@device.id">
+    <img src="/assets/images/@device.icon-icon.png" title="@device.id @device.deviceType" height="25">
+    @label
+</label>
+<button id="device-down@device.id"
+        class="btn"
+        onclick="makeCall('@device.id', '@doubleDown')">
+<<
+</button>
+
+<button id="-"
+        class="btn"
+        value="Next"
+        onclick="makeCall('@device.id', '@down')">
+<
+</button>
+
+<span id="@outputId@device.id"> 00.0 @device.units.getOrElse("")</span>
+
+<button id="+"
+        class="btn"
+        value="Next"
+        onclick="makeCall('@device.id', '@up')">
+>
+</button>
+
+<button id="++"
+        class="btn"
+        value="Next"
+        onclick="makeCall('@device.id', '@doubleUp')">
+>>
+</button>
+

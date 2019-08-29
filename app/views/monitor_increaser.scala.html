@@ -1,0 +1,12 @@
+@import connectors.Configuration._
+@import model.Device
+@(device: Device)
+
+<label class="ao-device-label">
+    @device.monitorIncreaser.map {mi =>
+        <img src="/assets/images/@mi.icon-icon.png" title="@mi.id @mi.deviceType" height="25">
+        @mi.description:
+    }
+</label>
+
+<span id="monitor-increaser@device.id"> 00.0 @device.units.getOrElse("")</span>

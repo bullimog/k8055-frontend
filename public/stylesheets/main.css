@@ -4,20 +4,173 @@ label { display: table-cell; }
 input { display: table-cell; }
 th    {text-align: left;     }
 td    {padding: 4px; }
-div   {font-family:Arial,"libra sans",sans-serif; }
+div   {font-family:Arial,"libra sans",sans-serif; font-size: 100%}
+fieldset{padding: 3px; margin: 6px; background-color:#e5e5e5;}
+h2{padding: 1px; margin: 1px;}
 
+.monitors-and-strobes {width:440px; float: left}
+.devices {width:420px; float: left}
+.form-field {padding-bottom: 10px}
+.sequencer {width:400px; float: left}
+.program-list {overflow:scroll; height:467px; padding-top: 1px}
+.item-aligned {display:table; margin: 2px;}
 .comment {color: green; font-weight:bold}
 .running {color: red; font-weight:bold}
 .to-run {color: black; background-color: grey}
 .ran {color: gray; font-weight:lighter}
+.ai-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 210px; height: 20px;}
+.ao-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px; height: 30px;}
+.di-device-label{color: black; text-align: left; text-vertical-align: bottom; width: 180px;}
+.do-device-label{color: black; text-align: left; text-vertical-align: top; width: 210px;}
+.d-increaser-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
+.d-sensor-label{color: black; text-align: left; text-vertical-align: bottom; width: 150px;}
+.clock-label{color: black; text-align: left; text-vertical-align: bottom; width: 230px;}
+.auto-label{color: black; text-align: right; text-vertical-align: bottom; width: 100px;}
+
+
+input[type=checkbox] {
+	visibility: hidden;
+}
+
+.digital-in {
+	width: 25px;
+	height: 25px;
+	background: #ddd;
+	margin: 5px 5px;
+
+	border-radius: 100%;
+	position: relative;
+	box-shadow: 0px 1px 3px rgba(0,0,0,1.5);
+}
+
+.digital-in label {
+	display: block;
+	width: 15px;
+	height: 15px;
+	border-radius: 100px;
+
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	z-index: 1;
+
+	background: #333;
+	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
+}
+
+.digital-in input[type=checkbox]:checked + label {
+	background: #26ca28;
+}
+
+.digital-in input[type=checkbox]:not(:checked) + label {
+	background: #000000;
+}
+
+
+/**
+ * Checkbox Three
+ */
+.digital-out {
+	width: 75px;
+	height: 23px;
+	background: #333;
+	margin: 3px 4px;
+    pointer-events: fnone;
+	border-radius: 50px;
+	position: relative;
+}
+
+/**
+ * Create the text for the On position
+ */
+.digital-out:before {
+	content: 'on';
+	position: absolute;
+	top: 1px;
+	left: 13px;
+	height: 2px;
+	color: #26ca28;
+	font-size: 16px;
+}
+
+/**
+ * Create the label for the off position
+ */
+.digital-out:after {
+	content: 'off';
+	position: absolute;
+	top: 2px;
+	left: 44px;
+	height: 2px;
+	color: #aaa;
+	font-size: 16px;
+}
+
+/**
+ * Create the pill to click
+ */
+.digital-out label {
+	display: block;
+	width: 36px;
+	height: 15px;
+	border-radius: 50px;
+
+	transition: all .5s ease;
+	cursor: pointer;
+	position: absolute;
+	top: 4px;
+	z-index: 1;
+	left: 5px;
+	background: #eee;
+}
+
+/**
+ * Create the checkbox event for the label
+ */
+.digital-out input[type=checkbox]:checked + label {
+	left: 34px;
+	background: #26ca28;
+}
+
+
+
+.btn {
+  background: #dddddd;
+  background-image: -webkit-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -moz-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -ms-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: -o-linear-gradient(top, #dddddd, #aaaaaa);
+  background-image: linear-gradient(to bottom, #dddddd, #aaaaaa);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #000000;
+  font-size: 12px;
+  padding: 2px 5px 2px 5px;
+  border: solid #666666 1px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #eeeeee;
+  background-image: -webkit-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -moz-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -ms-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: -o-linear-gradient(top, #eeeeee, #bbbbbb);
+  background-image: linear-gradient(to bottom, #eeeeee, #bbbbbb);
+  text-decoration: none;
+}
 
 .btn-disable
         {
         cursor: fdefault;
         pointer-events: fnone;
         /*Button disabled - CSS color class*/
-        color: #c0c0c0;
-        background-color: #ffffff;
+        color: #cccccc;
+        background: #eeeeee;
         }
 
 .btn-enable
@@ -25,5 +178,5 @@ div   {font-family:Arial,"libra sans",sans-serif; }
         cursor: fdefault;
         pointer-events: fauto;
         color: #000000;
-        background-color: #c0c0c0;
+        background: #c0c0c0;
         }

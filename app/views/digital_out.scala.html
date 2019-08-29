@@ -1,0 +1,19 @@
+@import model.Device
+@(device: Device)
+
+<label class="do-device-label" id="deviceDesc@device.id">
+     <img src="/assets/images/@device.icon-icon.png" title="@device.id @device.deviceType" height="25">
+    @device.description:
+</label>
+
+
+
+<div class="digital-out">
+    <input type="checkbox"
+           name="device-name@device.id"
+           id="device-true@device.id"
+           value="true"
+           onclick="makeCall('@device.id', this.checked)">
+    <label for="device-true@device.id"></label>
+</div>
+

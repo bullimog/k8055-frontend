@@ -1,0 +1,11 @@
+@import model.Device
+@(device: Device)
+<label class="di-device-label" id="deviceDesc@device.id">
+    <img src="/assets/images/@device.icon-icon.png" title="@device.id @device.deviceType" height="25">
+    @device.description:
+</label>
+
+<div class="digital-in">
+<input type="checkbox" name="device-name@device.id" id="device-true@device.id" value="true">
+<label for="device-true@device.id"></label>
+</div>

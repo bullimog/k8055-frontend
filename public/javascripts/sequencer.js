@@ -1,15 +1,29 @@
 
+
+
   function highlightSteps(current){
 
   //console.debug("current="+current)
 
-//    if(current >= 0) {
       var steps = $(".program").children().children();
       for(var i=1; i<current; i++){
+        console.debug("############# "+ $("#"+steps[i].id))
         $("#"+steps[i].id).removeClass("to-run");
         $("#"+steps[i].id).removeClass("running");
         $("#"+steps[i].id).addClass("ran");
       }
+
+      var currentDiv = document.getElementById("step"+(current))
+      if (currentDiv == null){
+        currentDiv = document.getElementById("step-description"+(current));
+      }
+
+      var autoScroll = document.getElementById("auto-scroll-program")
+
+      if(currentDiv != null && autoScroll.checked == true) {
+        document.getElementById("program-list").scrollTop = currentDiv.offsetTop-100;
+      }
+
 
       $("#step"+current).removeClass("to-run");
       $("#step"+current).addClass("running");
@@ -64,7 +78,7 @@
           }
           case 4: {                                                              //DIGITAL_OUT
             if(compDigitalState) $("#device-true"+compId).prop("checked", true)
-            else $("#device-false"+compId).prop("checked", true);
+            else $("#device-true"+compId).prop("checked", false);
             break;
           }
         }
@@ -109,7 +123,7 @@
 //       console.debug("monitor: " + sensorType)
     //    console.debug("monitor: "+ monitorId + " - "  + monitorEnabled +" - " + monitorTemp +" - "+ sensorTemp);
        if(monitorEnabled) $("#monitor-true"+monitorId).prop("checked", true)
-            else $("#monitor-false"+monitorId).prop("checked", true);
+            else $("#monitor-true"+monitorId).prop("checked", false);
 
        $("#monitor-temperature"+monitorId).text(monitorTemp+" "+sensorUnit);
 
@@ -139,7 +153,7 @@
 
 //         console.debug("strobe: "+ strobeId + " - "  + strobeEnabled +" - " + strobeOnTime +" - "+ strobeOffTime + " - " + increaserState);
          if(strobeEnabled) $("#strobe-true"+strobeId).prop("checked", true)
-              else $("#strobe-false"+strobeId).prop("checked", true);
+              else $("#strobe-true"+strobeId).prop("checked", false);
 
          $("#strobe-on"+strobeId).text(strobeOnTime+" seconds");
          $("#strobe-off"+strobeId).text(strobeOffTime+" seconds");
@@ -152,7 +166,10 @@
 
   function startSequencer(){jsRoutes.controllers.StatusController.startSequencer(null).ajax();};
   function stopSequencer(){jsRoutes.controllers.StatusController.stopSequencer(null).ajax();};
-  function resetSequencer(){jsRoutes.controllers.StatusController.resetSequencer(null).ajax();};
+  function resetSequencer(){
+    document.getElementById("program-list").scrollTop = 0;
+    jsRoutes.controllers.StatusController.resetSequencer(null).ajax();
+    };
   function nextStep(){jsRoutes.controllers.StatusController.nextStep(null).ajax();};
   function previousStep(){jsRoutes.controllers.StatusController.previousStep(null).ajax();};
 

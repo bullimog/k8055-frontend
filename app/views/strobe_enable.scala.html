@@ -1,0 +1,15 @@
+@import model.Device
+@(device: Device)
+
+<legend>@device.description</legend>
+
+<div class="digital-out">
+    <input type="checkbox"
+           name="strobe-enabled@device.id"
+           id="strobe-true@device.id"
+           value="true"
+           onclick="makeCall('@device.id', this.checked)">
+    <label for="strobe-true@device.id"></label>
+</div>
+
+
